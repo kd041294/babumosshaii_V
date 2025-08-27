@@ -4,26 +4,7 @@ require 'template_header.php';
 </head>
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg sticky-top">
-    <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="#">
-        <img src="assets/images/logo.png" alt="Logo" />
-        <span>BabuMosshaii</span>
-      </a>
-      <button class="navbar-toggler text-white border" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <i class="bi bi-list fs-2"></i> <!-- Hamburger menu icon -->
-      </button>
-      <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
-        <ul class="navbar-nav mx-auto">
-          <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
-          <li class="nav-item"><a class="nav-link text-decoration-none" href="#menu">Menu</a></li>
-          <li class="nav-item"><a class="nav-link text-decoration-none" href="#about">About Us</a></li>
-          <li class="nav-item"><a class="nav-link text-decoration-none" href="#review">Testimonial's</a></li>
-        </ul>
-        <a href="#contact" class="btn btn-quote px-3">Get Quote</a>
-      </div>
-    </div>
-  </nav>
+  <?= require 'navbar.php'; ?>
   <!-- Hero Section -->
   <section id="home" class="hero d-flex align-items-center">
     <div class="container hero-content animate__animated animate__fadeInDown">
