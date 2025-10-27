@@ -42,7 +42,7 @@
             <div class="col-md-4 footer-contact text-md-end text-center d-flex flex-column justify-content-center align-items-md-end align-items-center p-4" style="background: rgba(255,255,255,0.03);">
                 <div class="mb-3">
                     <i class="bi bi-geo-alt-fill me-2 text-warning fs-5"></i>
-                    <span style="color:#f8f9fa;font-size:1.05rem;">104/4 Hazra Road, Kolkata - 26, WB</span>
+                    <span style="color:#f8f9fa;font-size:1.05rem;">Wireless Para, Konnagar, Near Sukanta Sporting Club, Hooghly - 712246, West Bengal</span>
                 </div>
                 <div class="mb-3">
                     <i class="bi bi-telephone-fill me-2 text-warning fs-5"></i>
