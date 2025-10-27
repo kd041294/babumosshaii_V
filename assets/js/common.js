@@ -1,3 +1,25 @@
+function showEventLoader() {
+  $("#eventLoader").removeClass("d-none");
+}
+function hideEventLoader() {
+  $("#eventLoader").addClass("d-none");
+}
+function showResponseModal(type, message) {
+    // type: 'success' or 'error'
+    let modalTitle = (type === 'success') ? 'Success' : 'Error';
+    let modalClass = (type === 'success') ? 'text-success' : 'text-danger';
+
+    // Update modal content dynamically
+    $('#responseModalLabel').text(modalTitle);
+    $('#responseModalBody')
+        .removeClass('text-success text-danger')
+        .addClass(modalClass)
+        .html(`<strong>${message}</strong>`);
+
+    // Show the modal
+    let responseModal = new bootstrap.Modal(document.getElementById('responseModal'));
+    responseModal.show();
+}
 $(document).ready(function () {
   // Disable past dates for eventDate input
   var today = new Date().toISOString().split("T")[0];
