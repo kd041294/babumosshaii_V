@@ -5,12 +5,13 @@ $get_call_back = "INSERT INTO
         user_query (
         uq_user_full_name, 
         uq_user_number, 
+        uq_user_email,
         uq_user_exp_heads, 
         uq_user_event_type, 
         uq_user_event_location, 
         uq_user_event_date) 
         VALUES 
-        (?, ?, ?, ?, ?, ?)";
+        (?, ?, ?, ?, ?, ?, ?)";
 
 //Query to get all the banquet list 
 $get_banquet_list_query = "SELECT 
