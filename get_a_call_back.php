@@ -19,15 +19,20 @@
                     <input type="number" class="form-control" id="expectedHeads" name="expectedHeads" placeholder="Number of Guests" min="1" required />
                 </div>
                 <div class="col-md-6">
+                    <label class="form-label fw-semibold" for="email"><i class="bi bi-envelope-fill me-1 text-info"></i>Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email" required />
+                </div>
+                <div class="col-md-6">
                     <label class="form-label fw-semibold" for="eventType"><i class="bi bi-calendar-event-fill me-1 text-danger"></i>Event Type</label>
                     <select class="form-select" id="eventType" name="eventType" required>
                         <option value="" disabled selected>Select Event Type</option>
-                        <option value="WP">Wedding Party (WP)</option>
-                        <option value="RP">Reception Party (RP)</option>
-                        <option value="RC">Rice Ceremony (RC)</option>
-                        <option value="BP">Birthday Party (BP)</option>
-                        <option value="AP">Anniversary Party (AP)</option>
-                        <option value="OT">Other</option>
+                        <option value="Wedding Party (WP)">Wedding Party (WP)</option>
+                        <option value="Reception Party (RP)">Reception Party (RP)</option>
+                        <option value="Rice Ceremony (RC)">Rice Ceremony (RC)</option>
+                        <option value="Birthday Party (BP)">Birthday Party (BP)</option>
+                        <option value="Anniversary Party (AP)">Anniversary Party (AP)</option>
+                        <option value="Co-operate Party (CP)">Co-operate Party (CP)</option>
+                        <option value="Other">Other</option>
                     </select>
                 </div>
                 <div class="col-md-6">

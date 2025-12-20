@@ -5,6 +5,7 @@ require_once __DIR__ . '/common/common_function.php';
 // Get POST data
 $fullName = $_POST['fullName'] ?? '';
 $contactNumber = $_POST['contactNumber'] ?? '';
+$email = $_POST['email'] ?? '';
 $expectedHeads = $_POST['expectedHeads'] ?? '';
 $eventType = $_POST['eventType'] ?? '';
 $eventLocation = $_POST['eventLocation'] ?? '';
@@ -14,6 +15,7 @@ $eventDate = $_POST['eventDate'] ?? '';
 if (
     empty($fullName) ||
     empty($contactNumber) ||
+    empty($email) ||
     empty($expectedHeads) ||
     empty($eventType) ||
     empty($eventLocation) ||
@@ -24,7 +26,7 @@ if (
 }
 
 // Save to DB
-$result = saveCallBackRequest($fullName, $contactNumber, $expectedHeads, $eventType, $eventLocation, $eventDate);
+$result = saveCallBackRequest($fullName, $contactNumber, $email, $expectedHeads, $eventType, $eventLocation, $eventDate);
 
 if ($result) {
     echo json_encode(['success' => true, 'message' => 'Request saved successfully!']);

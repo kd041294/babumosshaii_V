@@ -84,6 +84,16 @@ $(document).ready(function () {
       $("#eventType").removeClass("is-invalid");
     }
 
+    //Email: required and valid format
+    const email = $("#email").val().trim();
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      valid = false;
+      $("#email").addClass("is-invalid");
+    } else {
+      $("#email").removeClass("is-invalid");
+    }
+
     if (!valid) {
       return;
     }
@@ -95,6 +105,7 @@ $(document).ready(function () {
       data: {
         fullName: name,
         contactNumber: contact,
+        email: email,
         expectedHeads: heads,
         eventType: eventType,
         eventLocation: location,

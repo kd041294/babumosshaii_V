@@ -22,7 +22,7 @@ function decryptData($data)
     return openssl_decrypt(base64_decode($data), $encryptionMethod, ENCRYPTION_KEY, 0, ENCRYPTION_IV);
 }
 //Function to save call back request using query from db_queries.php
-function saveCallBackRequest($fullName, $contactNumber, $expectedHeads, $eventType, $eventLocation, $eventDate) {
+function saveCallBackRequest($fullName, $contactNumber, $email, $expectedHeads, $eventType, $eventLocation, $eventDate) {
     require_once __DIR__ . '/../db/db_connection.php';
     require_once __DIR__ . '/../db/db_queries.php';
 
@@ -31,6 +31,7 @@ function saveCallBackRequest($fullName, $contactNumber, $expectedHeads, $eventTy
         $stmt->execute([
             $fullName,
             $contactNumber,
+            $email,
             $expectedHeads,
             $eventType,
             $eventLocation,
