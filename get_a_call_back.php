@@ -31,7 +31,7 @@
                         <option value="Rice Ceremony (RC)">Rice Ceremony (RC)</option>
                         <option value="Birthday Party (BP)">Birthday Party (BP)</option>
                         <option value="Anniversary Party (AP)">Anniversary Party (AP)</option>
-                        <option value="Co-operate Party (CP)">Co-operate Party (CP)</option>
+                        <option value="Cooperate Party (CP)">Cooperate Party (CP)</option>
                         <option value="Other">Other</option>
                     </select>
                 </div>
@@ -71,7 +71,6 @@
         color: #181818;
         font-size: 1.05rem;
     }
-
     #contactForm .btn-primary {
         background: #B8183E;
         border: none;
