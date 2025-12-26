@@ -213,3 +213,67 @@ $create_banquet_visit_query = "INSERT INTO
         tcbv_client_email,
         tcbv_visit_date)
         VALUES(?, ?, ?, ?, ?, ?)";
+
+//Query to get review media's
+$get_review_medias_query = "SELECT 
+        term.term_event_id AS _event_id,
+        tes.tes_client_name AS _client_name,
+        tes.tes_event_date AS _event_date,
+
+        /* ⭐ Ratings & Review */
+        tr.tr_food_ratings        AS _food_rating,
+        tr.tr_arrangement_ratings AS _arrangement_rating,
+        tr.tr_behavior_ratings    AS _behavior_rating,
+        tr.tr_review              AS _review_text,
+        tr.tr_image               AS _review_image,
+
+        /* 🖼 Images */
+        JSON_ARRAYAGG(
+                CASE 
+                WHEN term.term_media_type = 'image' THEN
+                        JSON_OBJECT(
+                        'id', term.id,
+                        'url', term.term_media_url,
+                        'created_at', term.created_at,
+                        'status', term.status
+                        )
+                END
+        ) AS images,
+
+        /* 🎥 Videos */
+        JSON_ARRAYAGG(
+                CASE 
+                WHEN term.term_media_type = 'video' THEN
+                        JSON_OBJECT(
+                        'id', term.id,
+                        'url', term.term_media_url,
+                        'created_at', term.created_at,
+                        'status', term.status
+                        )
+                END
+        ) AS videos
+
+        FROM tbl_event_reviews_media AS term
+
+        INNER JOIN tbl_events_shedule AS tes
+        ON term.term_event_id = tes.id
+
+        LEFT JOIN tbl_review AS tr
+        ON tr.tr_ticket_uniq_id COLLATE utf8mb4_unicode_ci
+        = term.term_eve_uniq_id COLLATE utf8mb4_unicode_ci
+
+        WHERE
+        term.status = 1
+        AND tes.status = 1
+
+        GROUP BY
+        term.term_event_id,
+        tes.tes_client_name,
+        tes.tes_event_date,
+        tr.tr_food_ratings,
+        tr.tr_arrangement_ratings,
+        tr.tr_behavior_ratings,
+        tr.tr_review,
+        tr.tr_image
+
+        ORDER BY tes.tes_event_date DESC";

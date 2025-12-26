@@ -19,8 +19,6 @@ require 'template_header.php';
   <?php require 'menus.php'; ?>
   <!-- Gallery Section -->
   <?php require 'gallary.php'; ?>
-  <!-- Review Section -->
-  <?php require 'testimonial.php'; ?>
   <!-- Contact Section -->
   <?php require 'get_a_call_back.php'; ?>
   <!-- Footer -->
