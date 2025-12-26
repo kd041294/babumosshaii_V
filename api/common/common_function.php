@@ -172,5 +172,38 @@ function create_client_schedule_visit(
     }
 }
 
+//function to get client testimonials
+function getEventReviewMedias()
+{
+    require_once __DIR__ . '/../db/db_connection.php';
+    require_once __DIR__ . '/../db/db_queries.php';
 
+    $conn = $GLOBALS['conn'];
+
+    try {
+        $stmt = $conn->prepare($get_review_medias_query);
+        $stmt->execute();
+
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        /**
+         * 🔧 Clean NULL values from JSON arrays
+         */
+        foreach ($results as &$row) {
+            $row['images'] = array_values(
+                array_filter(json_decode($row['images'], true))
+            );
+
+            $row['videos'] = array_values(
+                array_filter(json_decode($row['videos'], true))
+            );
+        }
+
+        return $results;
+
+    } catch (PDOException $e) {
+        error_log("Database Error in getEventReviewMedias: " . $e->getMessage());
+        return [];
+    }
+}
 
