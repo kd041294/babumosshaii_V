@@ -3,29 +3,28 @@ if ($fileName === 'banquets_list' || $fileName === 'banquet_details') {
 ?>
     <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
-            <!-- Brand -->
             <a class="navbar-brand d-flex align-items-center" href="<?= $routes['home'] ?>">
-                <img src="assets/images/logo.png" alt="Logo" style="height: 40px;" />
-                <span class="ms-2">BabuMosshaii</span>
+                <img src="assets/images/logo.png" alt="Logo" />
+                <span>BabuMosshaii</span>
             </a>
-            <!-- Toggle Button (for mobile) -->
             <button class="navbar-toggler text-white border" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarNav">
-                <i class="bi bi-list fs-2 "></i> <!-- Hamburger menu icon -->
+                <i class="bi bi-list fs-2 "></i>
             </button>
-            <!-- Navbar Content -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <!-- Address Input + Fetch Button -->
-                <!-- <form class="d-flex align-items-center mx-auto flex-grow-1" style="max-width: 700px;">
-                    <input class="form-control form-control-sm text-muted me-2 flex-grow-1" type="text"
-                        placeholder="Enter your address" aria-label="Address" disabled />
-                    <button class="btn btn-outline-success btn-sm d-flex align-items-center" type="button">
-                        <i class="bi bi-geo-alt-fill me-1"></i>
-                        <span>Fetch</span>
-                    </button>
-                </form> -->
-                <!-- Get Catering Link -->
-                <ul class="navbar-nav ms-auto">
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= $routes['home'] ?>">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-decoration-none <?= $fileName === 'menu_list' ? 'active' : '' ?>" href="<?= $routes['menu_list'] ?>">Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-decoration-none <?= $fileName === 'client_testimonials' ? 'active' : '' ?>" href="<?= $routes['testimonials'] ?>">Testimonial's</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-decoration-none <?= $fileName === 'banquets_list' ? 'active' : '' ?>" href="<?= $routes['banquet_list'] ?>">Banquet Halls</a>
+                    </li>
                     <li class="nav-item">
                         <a class="btn btn-quote" href="<?= $routes['home'] ?>">Get Catering Quotation</a>
                     </li>
@@ -34,9 +33,9 @@ if ($fileName === 'banquets_list' || $fileName === 'banquet_details') {
         </div>
     </nav>
 <?php
-} else if($fileName === 'client_testimonials') {
+} else if ($fileName === 'client_testimonials') {
 ?>
-<nav class="navbar navbar-expand-lg sticky-top">
+    <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="<?= $routes['home'] ?>">
                 <img src="assets/images/logo.png" alt="Logo" />
@@ -52,6 +51,9 @@ if ($fileName === 'banquets_list' || $fileName === 'banquet_details') {
                         <a class="nav-link" href="<?= $routes['home'] ?>">Home</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link text-decoration-none <?= $fileName === 'menu_list' ? 'active' : '' ?>" href="<?= $routes['menu_list'] ?>">Menu</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link text-decoration-none <?= $fileName === 'client_testimonials' ? 'active' : '' ?>" href="<?= $routes['testimonials'] ?>">Testimonial's</a>
                     </li>
                     <li class="nav-item">
@@ -61,7 +63,41 @@ if ($fileName === 'banquets_list' || $fileName === 'banquet_details') {
                         <a class="btn btn-quote" href="<?= $routes['home'] ?>">Get Catering Quotation</a>
                     </li>
                 </ul>
-            </div>  
+            </div>
+        </div>
+    </nav>
+<?php
+} else if ($fileName === 'menu_list') {
+?>
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="<?= $routes['home'] ?>">
+                <img src="assets/images/logo.png" alt="Logo" />
+                <span>BabuMosshaii</span>
+            </a>
+            <button class="navbar-toggler text-white border" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+                <i class="bi bi-list fs-2 "></i>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= $routes['home'] ?>">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-decoration-none <?= $fileName === 'menu_list' ? 'active' : '' ?>" href="<?= $routes['menu_list'] ?>">Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-decoration-none <?= $fileName === 'client_testimonials' ? 'active' : '' ?>" href="<?= $routes['testimonials'] ?>">Testimonial's</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-decoration-none" href="<?= $routes['banquet_list'] ?>">Banquet Halls</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-quote" href="<?= $routes['home'] ?>">Get Catering Quotation</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 <?php
@@ -80,7 +116,7 @@ if ($fileName === 'banquets_list' || $fileName === 'banquet_details') {
             <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
-                    <li class="nav-item"><a class="nav-link text-decoration-none" href="#menu">Menu</a></li>
+                    <li class="nav-item"><a class="nav-link text-decoration-none <?= $fileName === 'menu_list' ? 'active' : '' ?>" href="<?= $routes['menu_list'] ?>">Menu</a></li>
                     <li class="nav-item"><a class="nav-link text-decoration-none" href="#about">About Us</a></li>
                     <li class="nav-item"><a class="nav-link text-decoration-none <?= $fileName === 'client_testimonials' ? 'active' : '' ?>" href="<?= $routes['testimonials'] ?>">Testimonial's</a></li>
                     <li class="nav-item"><a class="nav-link text-decoration-none" href="<?= REVIEW_LINK ?>">Write a review</a></li>

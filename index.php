@@ -15,8 +15,6 @@ require 'template_header.php';
   </section>
   <!-- About Section -->
   <?php require 'about_us.php'; ?>
-  <!-- Menu Section -->
-  <?php require 'menus.php'; ?>
   <!-- Gallery Section -->
   <?php require 'gallary.php'; ?>
   <!-- Contact Section -->

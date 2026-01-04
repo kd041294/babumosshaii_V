@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Encrypt a string
  *
@@ -22,7 +23,8 @@ function decryptData($data)
     return openssl_decrypt(base64_decode($data), $encryptionMethod, ENCRYPTION_KEY, 0, ENCRYPTION_IV);
 }
 //Function to save call back request using query from db_queries.php
-function saveCallBackRequest($fullName, $contactNumber, $email, $expectedHeads, $eventType, $eventLocation, $eventDate) {
+function saveCallBackRequest($fullName, $contactNumber, $email, $expectedHeads, $eventType, $eventLocation, $eventDate)
+{
     require_once __DIR__ . '/../db/db_connection.php';
     require_once __DIR__ . '/../db/db_queries.php';
 
@@ -44,7 +46,8 @@ function saveCallBackRequest($fullName, $contactNumber, $email, $expectedHeads, 
     }
 }
 //Function to gett all the banquet list
-function getBanquetList() {
+function getBanquetList()
+{
     require_once __DIR__ . '/../db/db_connection.php';
     require_once __DIR__ . '/../db/db_queries.php';
 
@@ -72,7 +75,8 @@ function getBanquetList() {
     }
 }
 //Function to get banquet hall details
-function getBanquetHallById($id) {
+function getBanquetHallById($id)
+{
     require_once __DIR__ . '/../db/db_connection.php';
     require_once __DIR__ . '/../db/db_queries.php';
 
@@ -100,7 +104,8 @@ function getBanquetHallById($id) {
     }
 }
 //Function to get all banquet ratings by hall id
-function getBanquetRatingsByHallId($id) {
+function getBanquetRatingsByHallId($id)
+{
     require_once __DIR__ . '/../db/db_connection.php';
     require_once __DIR__ . '/../db/db_queries.php';
     $get_banquet_ratings_query = "SELECT
@@ -200,10 +205,72 @@ function getEventReviewMedias()
         }
 
         return $results;
-
     } catch (PDOException $e) {
         error_log("Database Error in getEventReviewMedias: " . $e->getMessage());
         return [];
     }
 }
 
+function get_all_bm_menus($status = 1)
+{
+    require_once __DIR__ . '/../db/db_connection.php'; // $conn PDO
+    require_once __DIR__ . '/../db/db_queries.php';    // $get_all_bm_menu_list
+
+    try {
+        // Prepare statement
+        $stmt = $conn->prepare($get_all_bm_menu_list);
+        if (!$stmt) {
+            throw new Exception("Query preparation failed");
+        }
+
+        // Bind status parameter
+        $stmt->bindValue(1, $status, PDO::PARAM_INT);
+
+        // Execute
+        $stmt->execute();
+
+        // Fetch results
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $menus = [];
+        foreach ($results as $row) {
+
+            // 🔧 Clean & normalize category fields
+            $row['_live_counter'] = trim($row['_live_counter'] ?? '');
+            $row['_starter']      = trim($row['_starter'] ?? '');
+            $row['_main_course']  = trim($row['_main_course'] ?? '');
+            $row['_dessert']      = trim($row['_dessert'] ?? '');
+            $row['_Ads_on']       = trim($row['_Ads_on'] ?? '');
+            $row['_beverages']    = trim($row['_beverages'] ?? '');
+
+            // Price & discount normalization
+            $row['_price']    = isset($row['_price']) ? (float) $row['_price'] : 0;
+            $row['_discount'] = isset($row['_discount']) ? (int) $row['_discount'] : 0;
+
+            // Status normalization
+            $row['_status'] = isset($row['_status']) ? (int) $row['_status'] : 0;
+
+            $menus[] = $row;
+        }
+
+        return [
+            "status"  => true,
+            "message" => count($menus) ? "Menu list fetched successfully" : "No menus found",
+            "data"    => $menus
+        ];
+    } catch (PDOException $e) {
+        error_log("Database Error in get_all_bm_menus: " . $e->getMessage());
+        return [
+            "status"  => false,
+            "message" => "Database error while fetching menus",
+            "data"    => []
+        ];
+    } catch (Exception $e) {
+        error_log("Error in get_all_bm_menus: " . $e->getMessage());
+        return [
+            "status"  => false,
+            "message" => $e->getMessage(),
+            "data"    => []
+        ];
+    }
+}
