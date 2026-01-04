@@ -245,7 +245,7 @@ $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
                 <?php endif; ?>
 
               </span>
-
+              <br>
               <span style="font-size: 75%;">Last Updated On : <?= date('d M Y', strtotime($menu['_update_dt'])) ?></span>
             </div>
           </div>
