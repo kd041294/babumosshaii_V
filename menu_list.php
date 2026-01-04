@@ -147,6 +147,16 @@ $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
       padding: 10px 0;
     }
   }
+
+  .text-decoration-line-through {
+    opacity: 0.7;
+  }
+
+  .price-highlight {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #e74c3c;
+  }
 </style>
 </head>
 
@@ -200,12 +210,42 @@ $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
             </div>
             <!-- Price Footer -->
             <div class="menu-grid-footer">
+              <?php
+              $originalPrice = (float) $menu['_price'];
+              $discount      = (int) $menu['_discount'];
+
+              $finalPrice = $originalPrice;
+
+              if ($discount > 0) {
+                $finalPrice = $originalPrice - (($originalPrice * $discount) / 100);
+              }
+              ?>
+
               <span class="fw-bold">
-                ₹ <?= number_format($menu['_price'], 2) . '/plate' ?>
-                <?php if ($menu['_discount'] > 0): ?>
-                  <span class="text-success">(<?= $menu['_discount'] ?>% off)</span>
+
+                <?php if ($discount > 0): ?>
+                  <!-- Original Price (Striked) -->
+                  <span class="text-muted text-decoration-line-through me-1">
+                    ₹ <?= number_format($originalPrice, 2) ?>/plate
+                  </span>
+
+                  <!-- Discounted Price -->
+                  <span class="text-danger">
+                    ₹ <?= number_format($finalPrice, 2) ?>/plate
+                  </span>
+
+                  <span class="text-success ms-1">
+                    (<?= $discount ?>% off)
+                  </span>
+                <?php else: ?>
+                  <!-- No Discount -->
+                  <span class="text-danger">
+                    ₹ <?= number_format($originalPrice, 2) ?>/plate
+                  </span>
                 <?php endif; ?>
+
               </span>
+
               <span style="font-size: 75%;">Last Updated On : <?= date('d M Y', strtotime($menu['_update_dt'])) ?></span>
             </div>
           </div>
