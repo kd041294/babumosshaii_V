@@ -178,8 +178,8 @@ $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
             </div>
             <?php
             $sections = [
-              "Live Counters" => $menu['_live_counter'],
-              "Starters"      => $menu['_starter'],
+              "Live Counter's" => $menu['_live_counter'],
+              "Starter's"      => $menu['_starter'],
               "Main Course"   => $menu['_main_course'],
               "Dessert"       => $menu['_dessert'],
               "Add's-on"       => $menu['_Ads_on'],
@@ -220,9 +220,7 @@ $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
                 $finalPrice = $originalPrice - (($originalPrice * $discount) / 100);
               }
               ?>
-
               <span class="fw-bold">
-
                 <?php if ($discount > 0): ?>
                   <!-- Original Price (Striked) -->
                   <span class="text-muted text-decoration-line-through me-1">
@@ -243,7 +241,6 @@ $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
                     ₹ <?= number_format($originalPrice, 2) ?>/plate
                   </span>
                 <?php endif; ?>
-
               </span>
               <br>
               <span style="font-size: 75%;">Last Updated On : <?= date('d M Y', strtotime($menu['_update_dt'])) ?></span>
@@ -253,6 +250,13 @@ $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
       <?php endforeach; ?>
     </div>
   </div>
+  <div class="quick-connect-btn" id="quickConnectBtn" title="Quick Connect">
+    <i class="fas fa-comments"></i>
+  </div>
+  <!-- Quick Connect Floating Popup -->
+  <?php require 'quick_connect.php'; ?>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/common.js"></script>
 </body>
-
 </html>
