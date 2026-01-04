@@ -6,6 +6,7 @@ $fileName = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>BabuMosshaii Kitchen & Caterer's | Best Catering Services in Kolkata</title>
@@ -108,6 +109,7 @@ $fileName = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-L4DKC20V38"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
+
         function gtag() {
             dataLayer.push(arguments);
         }
