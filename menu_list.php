@@ -27,7 +27,7 @@ $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
 
   /* Header */
   .menu-grid-header {
-    background: linear-gradient(90deg, #f857a6, #ff5858);
+    background: linear-gradient(90deg, #ff512f, #f09819);
     color: #fff;
     padding: 14px 16px;
     font-size: 1rem;
@@ -124,6 +124,32 @@ $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
     border-radius: 999px;
   }
 
+  .menu-grid-card {
+    position: relative;
+  }
+
+  /* Watermark Logo */
+  .menu-grid-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("assets/images/logo.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 65%;
+    opacity: 0.06;
+    /* watermark softness */
+    pointer-events: none;
+    /* click-through */
+    z-index: 0;
+  }
+
+  .menu-grid-card>* {
+    position: relative;
+    z-index: 1;
+  }
+
+
   /* Mobile */
   @media (max-width: 576px) {
     .menu-content {
@@ -133,8 +159,8 @@ $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
 
   .notice-bar {
     width: 100%;
-    background: linear-gradient(90deg, #ff512f, #f09819);
-    color: #fff;
+    background: linear-gradient(90deg, #e6d131, #ecdfb9);
+    color: #181010;
     padding: 10px 0;
     overflow: hidden;
     position: relative;
@@ -148,8 +174,8 @@ $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
     display: inline-block;
     padding-left: 100%;
     font-size: 0.95rem;
-    font-weight: 700;
-    animation: scrollNotice 14s linear infinite;
+    font-weight: 600;
+    animation: scrollNotice 30s linear infinite;
   }
 
   /* Smooth scrolling animation */
@@ -172,14 +198,16 @@ $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
   }
 </style>
 </head>
+
 <body>
   <?= require 'navbar.php'; ?>
   <?php require 'quick_connect.php'; ?>
   <div class="container my-2">
     <div class="notice-bar">
       <div class="notice-text">
-        🍽️ All menus include breakfast and lunch for 50 guests.
+        🍽️ All menus include breakfast and lunch for 50 guests. For additional guests beyond 50, a charge of ₹225 per head will apply. The minimum requirement for any event is 250 guests.
       </div>
+
     </div>
     <div class="row g-3">
       <?php foreach ($menus as $menu): ?>
@@ -190,9 +218,7 @@ $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
             <!-- Header -->
             <div class="menu-grid-header d-flex justify-content-between align-items-center">
               <span><?= htmlspecialchars($menu['_menu_code']) ?></span>
-              <span class="badge <?= $menu['_status'] ? 'bg-success' : 'bg-secondary' ?>">
-                <?= $menu['_status'] ? 'Active' : 'Inactive' ?>
-              </span>
+              <span class="badge bg-success"><?= $menu['_arrange'] ?></span>
             </div>
 
             <?php
@@ -257,9 +283,13 @@ $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
         </div>
       <?php endforeach; ?>
     </div>
+    <div class="quick-connect-btn" id="quickConnectBtn" title="Quick Connect">
+      <i class="fas fa-comments"></i>
+    </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/common.js"></script>
 </body>
+
 </html>
