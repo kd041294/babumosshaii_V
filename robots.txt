@@ -1,4 +1,3 @@
 User-agent: *
-Disallow:
-
-Sitemap: https://babumosshaii.in/sitemap.xml
+Allow: /
+Sitemap: https://www.babumosshaii.in/sitemap.xml

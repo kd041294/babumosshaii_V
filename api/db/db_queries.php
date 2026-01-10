@@ -288,6 +288,7 @@ $get_all_bm_menu_list = "SELECT
     tbm.tbm_dessert AS _dessert,
     tbm.tbm_ads_on AS _Ads_on,
     tbm.tbm_beverages AS _beverages,
+    tbm.tbm_arrange AS _arrange,
     tbm.tbm_heads AS _heads,
     tbm.tbm_price AS _price,
     tbm.tbm_discount AS _discount,
