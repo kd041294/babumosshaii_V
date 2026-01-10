@@ -4,7 +4,7 @@ require_once __DIR__ . '/api/common/constant_links.php';
 require_once __DIR__ . '/api/common/common_function.php';
 $fileName = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
 ?>
-<head>
+<!DOCTYPE html>
   <meta charset="utf-8">
   <title>BabuMosshaii Kitchen & Caterer's | Best Catering Services in Kolkata</title>
 
