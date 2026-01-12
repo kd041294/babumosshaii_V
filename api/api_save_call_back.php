@@ -10,6 +10,7 @@ $expectedHeads = $_POST['expectedHeads'] ?? '';
 $eventType = $_POST['eventType'] ?? '';
 $eventLocation = $_POST['eventLocation'] ?? '';
 $eventDate = $_POST['eventDate'] ?? '';
+$additionalNotes = $_POST['additionalNotes'] ?? '';
 
 // Basic validation (optional, since JS validates too)
 if (
@@ -26,7 +27,7 @@ if (
 }
 
 // Save to DB
-$result = saveCallBackRequest($fullName, $contactNumber, $email, $expectedHeads, $eventType, $eventLocation, $eventDate);
+$result = saveCallBackRequest($fullName, $contactNumber, $email, $expectedHeads, $eventType, $eventLocation, $eventDate, $additionalNotes);
 
 if ($result) {
     echo json_encode(['success' => true, 'message' => 'Request saved successfully!']);

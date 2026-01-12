@@ -9,9 +9,10 @@ $get_call_back = "INSERT INTO
         uq_user_exp_heads, 
         uq_user_event_type, 
         uq_user_event_location, 
-        uq_user_event_date) 
+        uq_user_event_date,
+        uq_additional_notes) 
         VALUES 
-        (?, ?, ?, ?, ?, ?, ?)";
+        (?, ?, ?, ?, ?, ?, ?, ?)";
 
 //Query to get all the banquet list 
 $get_banquet_list_query = "SELECT 

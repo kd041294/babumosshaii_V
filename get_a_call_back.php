@@ -43,6 +43,12 @@
                     <label class="form-label fw-semibold" for="eventDate"><i class="bi bi-calendar-date-fill me-1 text-primary"></i>Event Date</label>
                     <input type="date" class="form-control" id="eventDate" name="eventDate" required />
                 </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold" for="eventDate">
+                        <i class="bi bi-journal-text me-1 text-primary"></i>Additional Notes
+                    </label>
+                    <textarea class="form-control" id="additionalNotes" name="additionalNotes" placeholder="Additional Notes"></textarea>
+                </div>
             </div>
             <div class="text-center mt-4">
                 <button type="submit" class="btn btn-primary px-5 py-2 fw-bold shadow">
