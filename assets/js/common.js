@@ -110,6 +110,7 @@ $(document).ready(function () {
         eventType: eventType,
         eventLocation: location,
         eventDate: eventDate,
+        additionalNotes: $("#additionalNotes").val() ? $("#additionalNotes").val().trim() : ""
       },
       dataType: "json",
       success: function (response) {
