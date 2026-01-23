@@ -299,4 +299,6 @@ $get_all_bm_menu_list = "SELECT
     FROM
     `tbl_bm_menu` AS tbm
     WHERE
-    tbm.status = ?";
+    tbm.status = ?
+    ORDER BY tbm.tbm_price
+    ASC";
