@@ -328,9 +328,39 @@ $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
       <i class="fas fa-comments"></i>
     </div>
   </div>
+  <script>
+    const BASE_URL = "<?= BASE_URL ?>";
+  </script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/common.js"></script>
+  <script>
+    $(document).on('click', '.share-btn', function() {
+
+      let menuName = $(this).data('menu');
+      let menuId = $(this).data('id');
+
+      // 🔗 Create share URL (customize route)
+      let shareUrl = BASE_URL + "menu_details.php?id=" + menuId;
+
+      // 📱 If Web Share API supported (mobile)
+      if (navigator.share) {
+        navigator.share({
+          title: "Check this Wedding Menu",
+          text: "🍽️ " + menuName + " - Wedding Menu",
+          url: shareUrl
+        }).catch(err => console.log(err));
+      } else {
+        // 💻 Fallback → Copy link
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          showResponseModal(true, "Link copied! Share it anywhere 👍");
+        }).catch(() => {
+          showResponseModal(false, "Failed to copy link");
+        });
+      }
+
+    });
+  </script>
 </body>
 
 </html>

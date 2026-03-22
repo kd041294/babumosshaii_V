@@ -302,3 +302,26 @@ $get_all_bm_menu_list = "SELECT
     tbm.status = ?
     ORDER BY tbm.tbm_price
     ASC";
+
+//Query to fetch all the menu by id
+$get_all_bm_menu_by_id = "SELECT
+    tbm.id AS _id,
+    tbm.tbm_menu_code AS _menu_code,
+    tbm.tbm_live_counters AS _live_counter,
+    tbm.tbm_starter AS _starter,
+    tbm.tbm_main_course AS _main_course,
+    tbm.tbm_dessert AS _dessert,
+    tbm.tbm_ads_on AS _Ads_on,
+    tbm.tbm_beverages AS _beverages,
+    tbm.tbm_arrange AS _arrange,
+    tbm.tbm_heads AS _heads,
+    tbm.tbm_price AS _price,
+    tbm.tbm_discount AS _discount,
+    tbm.tbm_create_dt AS _created_dt,
+    tbm.tbm_update_dt AS _update_dt,
+    tbm.status AS _status
+    FROM
+    `tbl_bm_menu` AS tbm
+    WHERE
+    id = ?
+    AND tbm.status = ?";

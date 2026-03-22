@@ -275,3 +275,69 @@ function get_all_bm_menus($status = 1)
         ];
     }
 }
+
+function get_bm_menus_by_id($id, $status = 1)
+{
+    require_once __DIR__ . '/../db/db_connection.php';
+    require_once __DIR__ . '/../db/db_queries.php';
+
+    try {
+        $stmt = $conn->prepare($get_all_bm_menu_by_id);
+
+        if (!$stmt) {
+            throw new Exception("Query preparation failed");
+        }
+
+        // ✅ Bind BOTH params correctly
+        $stmt->bindValue(1, $id, PDO::PARAM_INT);
+        $stmt->bindValue(2, $status, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        // ✅ Fetch SINGLE row
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$row) {
+            return [
+                "status"  => false,
+                "message" => "Menu not found",
+                "data"    => null
+            ];
+        }
+
+        // 🔧 Clean fields
+        $row['_live_counter'] = trim($row['_live_counter'] ?? '');
+        $row['_starter']      = trim($row['_starter'] ?? '');
+        $row['_main_course']  = trim($row['_main_course'] ?? '');
+        $row['_dessert']      = trim($row['_dessert'] ?? '');
+        $row['_Ads_on']       = trim($row['_Ads_on'] ?? '');
+        $row['_beverages']    = trim($row['_beverages'] ?? '');
+
+        // 💰 Normalize price
+        $row['_price']    = (float) ($row['_price'] ?? 0);
+        $row['_discount'] = (int) ($row['_discount'] ?? 0);
+
+        // 📊 Status normalize
+        $row['_status'] = (int) ($row['_status'] ?? 0);
+
+        return [
+            "status"  => true,
+            "message" => "Menu fetched successfully",
+            "data"    => $row // ✅ SINGLE object (not array)
+        ];
+    } catch (PDOException $e) {
+        error_log("DB Error: " . $e->getMessage());
+        return [
+            "status"  => false,
+            "message" => "Database error",
+            "data"    => null
+        ];
+    } catch (Exception $e) {
+        error_log("Error: " . $e->getMessage());
+        return [
+            "status"  => false,
+            "message" => $e->getMessage(),
+            "data"    => null
+        ];
+    }
+}
