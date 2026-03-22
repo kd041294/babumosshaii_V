@@ -3,269 +3,266 @@ require 'template_header.php';
 
 $id = $_GET['id'] ?? 0;
 $menuResponse = get_bm_menus_by_id($id, 1);
-$menu = $menuResponse['status'] ? $menuResponse['data'][0] ?? null : null;
+$menu = $menuResponse['status'] ? $menuResponse['data'] : null;
 ?>
 
 <title>Menu Details | Babumosshai</title>
 
+<!-- ✅ SEO + Share Preview -->
 <?php if ($menu): ?>
-<meta property="og:title" content="Wedding Menu - <?= htmlspecialchars($menu['_menu_code']) ?>">
-<meta property="og:image" content="<?= BASE_URL ?>assets/images/logo.png">
-<meta property="og:url" content="<?= BASE_URL ?>menu_details.php?id=<?= $menu['_id'] ?>">
+    <meta property="og:title" content="Wedding Menu - <?= htmlspecialchars($menu['_menu_code']) ?>">
+    <meta property="og:description" content="Premium wedding menu with delicious items and pricing.">
+    <meta property="og:image" content="<?= BASE_URL ?>assets/images/logo.png">
+    <meta property="og:url" content="<?= BASE_URL ?>menu_details.php?id=<?= $menu['_id'] ?>">
 <?php endif; ?>
 
 <style>
-/* Page spacing fix */
-.container {
-    max-width: 900px;
-}
+    /* Card */
+    .menu-card {
+        border-radius: 22px;
+        background: linear-gradient(180deg, #fffaf5, #fff1e8);
+        border: 1px solid #ffe0cc;
+        overflow: hidden;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+    }
 
-/* Header Action Bar */
-.top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-}
+    /* Header */
+    .menu-header {
+        background: linear-gradient(90deg, #ff512f, #f09819);
+        color: #fff;
+        padding: 16px;
+        font-weight: 700;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-/* Back button */
-.back-btn {
-    border-radius: 30px;
-    padding: 6px 16px;
-    font-weight: 500;
-}
+    /* Sections */
+    .menu-section {
+        padding: 12px 18px;
+    }
 
-/* Action buttons group */
-.action-group {
-    display: flex;
-    gap: 8px;
-}
+    .menu-title {
+        font-size: 0.8rem;
+        font-weight: 800;
+        color: #c2410c;
+        border-bottom: 1px dashed #f5b089;
+        margin-bottom: 6px;
+        text-transform: uppercase;
+    }
 
-/* Share button */
-.share-btn {
-    border-radius: 30px;
-    padding: 6px 14px;
-}
+    .menu-list {
+        font-size: 0.85rem;
+        padding-left: 18px;
+        color: #444;
+    }
 
-/* Card */
-.menu-card {
-    border-radius: 22px;
-    background: linear-gradient(180deg, #fffaf5, #fff1e8);
-    border: 1px solid #ffe0cc;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-    overflow: hidden;
-}
+    /* Footer */
+    .menu-footer {
+        background: #fff7ed;
+        padding: 14px 18px;
+        border-top: 1px dashed #f4c6a3;
+    }
 
-/* Header */
-.menu-header {
-    background: linear-gradient(90deg,#ff512f,#f09819);
-    color:#fff;
-    padding:16px;
-    font-weight:700;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
+    /* Price */
+    .final-price {
+        color: #b11226;
+        font-size: 1.4rem;
+        font-weight: 800;
+    }
 
-/* Section */
-.menu-section {
-    padding:12px 18px;
-}
+    .original-price {
+        text-decoration: line-through;
+        color: #888;
+    }
 
-.menu-title {
-    font-size:0.8rem;
-    font-weight:800;
-    color:#c2410c;
-    border-bottom:1px dashed #f5b089;
-    margin-bottom:6px;
-    text-transform:uppercase;
-}
+    .discount-badge {
+        background: #22c55e;
+        color: #fff;
+        padding: 3px 8px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+    }
 
-.menu-list {
-    font-size:0.85rem;
-    padding-left:18px;
-}
+    /* Share Button */
+    .share-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-/* Footer */
-.menu-footer {
-    background:#fff7ed;
-    padding:14px 18px;
-    border-top:1px dashed #f4c6a3;
-}
+    .share-btn:hover {
+        background: #fff;
+        color: #ff512f;
+    }
 
-/* Price */
-.final-price {
-    color:#b11226;
-    font-size:1.5rem;
-    font-weight:800;
-}
+    /* Back button */
+    .back-btn {
+        border-radius: 20px;
+    }
 
-.original-price {
-    text-decoration:line-through;
-    color:#888;
-}
-
-.discount-badge {
-    background:#22c55e;
-    color:#fff;
-    padding:3px 10px;
-    border-radius:20px;
-    font-size:0.7rem;
-}
-
-/* Notice */
-.notice-bar {
-    background:linear-gradient(90deg,#ffe066,#fff3b0);
-    padding:12px;
-    border-radius:12px;
-    margin-bottom:18px;
-    font-weight:600;
-    font-size:0.9rem;
-    text-align:center;
-}
+    /* Notice */
+    .notice-bar {
+        background: linear-gradient(90deg, #e6d131, #ecdfb9);
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
 </style>
 
 </head>
 
 <body>
 
-<?= require 'navbar.php'; ?>
+    <?= require 'navbar.php'; ?>
 
-<div class="container my-3">
+    <div class="container my-3">
 
-    <!-- ✅ TOP BAR -->
-    <div class="top-bar">
-
-        <!-- LEFT -->
-        <button onclick="history.back()" class="btn btn-outline-dark btn-sm back-btn">
-            <i class="bi bi-arrow-left"></i> Back
-        </button>
-
-        <!-- RIGHT -->
-        <?php if ($menu): ?>
-        <div class="action-group">
-            <button class="btn btn-danger btn-sm share-btn"
-                data-menu="<?= htmlspecialchars($menu['_menu_code']) ?>"
-                data-id="<?= $menu['_id'] ?>">
-                <i class="bi bi-share-fill"></i> Share
+        <!-- Back -->
+        <div class="mb-2 d-flex justify-content-between align-items-center">
+            <button onclick="history.back()" class="btn btn-outline-dark btn-sm back-btn">
+                <i class="bi bi-arrow-left"></i> Back
             </button>
-        </div>
-        <?php endif; ?>
 
-    </div>
-
-    <!-- Notice -->
-    <div class="notice-bar">
-        🍽️ Includes breakfast & lunch for 50 guests. Extra ₹225/head. Minimum 250 guests required.
-    </div>
-
-    <?php if ($menu): ?>
-
-    <div class="menu-card">
-
-        <!-- Header -->
-        <div class="menu-header">
-            <span><?= htmlspecialchars($menu['_menu_code']) ?></span>
-            <span class="badge bg-success"><?= $menu['_arrange'] ?></span>
+            <?php if ($menu): ?>
+                <button class="btn btn-danger btn-sm share-btn"
+                    data-menu="<?= htmlspecialchars($menu['_menu_code']) ?>"
+                    data-id="<?= $menu['_id'] ?>">
+                    <i class="bi bi-share-fill"></i>
+                </button>
+            <?php endif; ?>
         </div>
 
-        <?php
-        $sections = [
-            "Live Counters" => $menu['_live_counter'],
-            "Starters" => $menu['_starter'],
-            "Main Course" => $menu['_main_course'],
-            "Dessert" => $menu['_dessert'],
-            "Add-ons" => $menu['_Ads_on'],
-            "Beverages" => $menu['_beverages']
-        ];
-        ?>
+        <!-- Notice -->
+        <div class="notice-bar">
+            🍽️ Includes breakfast & lunch for 50 guests. Extra guest ₹225/head. Minimum 250 guests required.
+        </div>
 
-        <!-- Sections -->
-        <?php foreach ($sections as $title => $items): ?>
-            <?php if (!empty(trim($items))): ?>
-                <div class="menu-section">
-                    <div class="menu-title"><?= $title ?></div>
-                    <ul class="menu-list">
-                        <?php foreach (preg_split("/\r\n|\n|,/", $items) as $item): ?>
-                            <?php if (trim($item)): ?>
-                                <li><?= htmlspecialchars(trim($item)) ?></li>
+        <div class="row justify-content-center">
+
+            <?php if ($menu): ?>
+
+                <div class="col-md-6">
+
+                    <div class="menu-card">
+
+                        <!-- Header -->
+                        <div class="menu-header">
+                            <span><?= htmlspecialchars($menu['_menu_code']) ?></span>
+                            <span class="badge bg-success"><?= $menu['_arrange'] ?></span>
+                        </div>
+
+                        <?php
+                        $sections = [
+                            "Live Counters" => $menu['_live_counter'],
+                            "Starters" => $menu['_starter'],
+                            "Main Course" => $menu['_main_course'],
+                            "Dessert" => $menu['_dessert'],
+                            "Add-ons" => $menu['_Ads_on'],
+                            "Beverages" => $menu['_beverages']
+                        ];
+                        ?>
+
+                        <!-- Content -->
+                        <?php foreach ($sections as $title => $items): ?>
+                            <?php if (!empty(trim($items))): ?>
+                                <div class="menu-section">
+                                    <div class="menu-title"><?= $title ?></div>
+                                    <ul class="menu-list">
+                                        <?php foreach (preg_split("/\r\n|\n|,/", $items) as $item): ?>
+                                            <?php if (trim($item)): ?>
+                                                <li><?= htmlspecialchars(trim($item)) ?></li>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
                             <?php endif; ?>
                         <?php endforeach; ?>
-                    </ul>
+
+                        <!-- Footer -->
+                        <div class="menu-footer">
+                            <strong>Total Heads: <?= $menu['_heads'] ?></strong>
+                        </div>
+
+                        <div class="menu-footer">
+                            <?php
+                            $original = (float)$menu['_price'];
+                            $discount = (int)$menu['_discount'];
+                            $final = $discount > 0 ? $original - ($original * $discount / 100) : $original;
+                            ?>
+
+                            <?php if ($discount > 0): ?>
+                                <span class="final-price">₹<?= number_format($final, 2) ?></span>
+                                <span class="original-price">₹<?= number_format($original, 2) ?></span>
+                                <span class="discount-badge"><?= $discount ?>% OFF</span>
+                            <?php else: ?>
+                                <span class="final-price">₹<?= number_format($original, 2) ?>/plate</span>
+                            <?php endif; ?>
+
+                            <br>
+                            <small>Updated: <?= date('d M Y', strtotime($menu['_update_dt'])) ?></small>
+                        </div>
+
+                        <!-- CTA -->
+                        <div class="text-center p-3">
+                            <button class="btn btn-danger px-4 share-btn"
+                                data-menu="<?= htmlspecialchars($menu['_menu_code']) ?>"
+                                data-id="<?= $menu['_id'] ?>">
+                                <i class="bi bi-share-fill me-2"></i> Share This Menu
+                            </button>
+                        </div>
+
+                    </div>
+
                 </div>
-            <?php endif; ?>
-        <?php endforeach; ?>
 
-        <!-- Footer -->
-        <div class="menu-footer">
-            <strong>Total Heads: <?= $menu['_heads'] ?></strong>
-        </div>
-
-        <div class="menu-footer">
-            <?php
-            $original = (float)$menu['_price'];
-            $discount = (int)$menu['_discount'];
-            $final = $discount > 0 ? $original - ($original * $discount / 100) : $original;
-            ?>
-
-            <?php if ($discount > 0): ?>
-                <span class="final-price">₹<?= number_format($final, 2) ?></span>
-                <span class="original-price ms-2">₹<?= number_format($original, 2) ?></span>
-                <span class="discount-badge ms-2"><?= $discount ?>% OFF</span>
             <?php else: ?>
-                <span class="final-price">₹<?= number_format($original, 2) ?>/plate</span>
+
+                <!-- No Data -->
+                <div class="text-center mt-5">
+                    <i class="bi bi-exclamation-circle fs-1"></i>
+                    <h5>Menu not found</h5>
+                </div>
+
             <?php endif; ?>
 
-            <br>
-            <small>Updated: <?= date('d M Y', strtotime($menu['_update_dt'])) ?></small>
-        </div>
-
-        <!-- Bottom CTA -->
-        <div class="text-center p-3">
-            <button class="btn btn-danger px-4 share-btn"
-                data-menu="<?= htmlspecialchars($menu['_menu_code']) ?>"
-                data-id="<?= $menu['_id'] ?>">
-                <i class="bi bi-share-fill me-2"></i> Share This Menu
-            </button>
         </div>
 
     </div>
 
-    <?php else: ?>
+    <script>
+        const BASE_URL = "<?= BASE_URL ?>";
 
-    <div class="text-center mt-5">
-        <i class="bi bi-exclamation-circle fs-1"></i>
-        <h5>Menu not found</h5>
-    </div>
+        $(document).on('click', '.share-btn', function() {
 
-    <?php endif; ?>
+            let menuName = $(this).data('menu');
+            let menuId = $(this).data('id');
+            let url = BASE_URL + "menu_details.php?id=" + menuId;
 
-</div>
-
-<script>
-const BASE_URL = "<?= BASE_URL ?>";
-
-$(document).on('click', '.share-btn', function() {
-    let name = $(this).data('menu');
-    let id = $(this).data('id');
-    let url = BASE_URL + "menu_details.php?id=" + id;
-
-    if (navigator.share) {
-        navigator.share({
-            title: "Wedding Menu",
-            text: "🍽️ " + name,
-            url: url
+            if (navigator.share) {
+                navigator.share({
+                    title: "Wedding Menu",
+                    text: "🍽️ " + menuName,
+                    url: url
+                });
+            } else {
+                navigator.clipboard.writeText(url).then(() => {
+                    alert("Link copied!");
+                });
+            }
         });
-    } else {
-        navigator.clipboard.writeText(url).then(() => {
-            alert("Link copied!");
-        });
-    }
-});
-</script>
+    </script>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>
