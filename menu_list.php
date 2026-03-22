@@ -196,6 +196,31 @@ $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
       animation-duration: 10s;
     }
   }
+
+  /* Share Button */
+  .share-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    backdrop-filter: blur(6px);
+  }
+
+  .share-btn:hover {
+    background: #fff;
+    color: #ff512f;
+    transform: scale(1.1);
+  }
+
+  .share-btn i {
+    font-size: 0.9rem;
+  }
 </style>
 </head>
 
@@ -217,8 +242,24 @@ $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
 
             <!-- Header -->
             <div class="menu-grid-header d-flex justify-content-between align-items-center">
+
               <span><?= htmlspecialchars($menu['_menu_code']) ?></span>
-              <span class="badge bg-success"><?= $menu['_arrange'] ?></span>
+
+              <div class="d-flex align-items-center gap-2">
+
+                <span class="badge bg-success"><?= $menu['_arrange'] ?></span>
+
+                <!-- Share Button -->
+                <button
+                  class="share-btn"
+                  data-menu="<?= htmlspecialchars($menu['_menu_code']) ?>"
+                  data-id="<?= $menu['_id'] ?>"
+                  title="Share Menu">
+                  <i class="bi bi-share-fill"></i>
+                </button>
+
+              </div>
+
             </div>
 
             <?php

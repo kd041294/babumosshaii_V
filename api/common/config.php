@@ -8,8 +8,8 @@ define('ENCRYPTION_IV', '4H!x8z$Wq@1vB#c7');
 if ($isLocal) {
     // Local environment
     define('ENVIRONMENT', 'local');
-    define('BASE_URL', 'http://localhost/babumosshaii_V/');
-    define('REVIEW_LINK', 'http://localhost/babumosshaii_review/');
+    define('BASE_URL', 'http://localhost:8383/babumosshaii_V/');
+    define('REVIEW_LINK', 'http://localhost:8383/babumosshaii_review/');
     define('DB_HOST', '127.0.0.1');
     define('DB_NAME', 'babumosshaii_db');
     define('DB_USER', 'root');
