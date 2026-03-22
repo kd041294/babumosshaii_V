@@ -127,7 +127,7 @@ $menu = $menuResponse['status'] ? $menuResponse['data'] : null;
 
         <!-- Back -->
         <div class="mb-2 d-flex justify-content-between align-items-center">
-            <button onclick="history.back()" class="btn btn-outline-dark btn-sm back-btn">
+            <button onclick="history.back()" class="btn btn-outline-light btn-sm back-btn">
                 <i class="bi bi-arrow-left"></i> Back
             </button>
 
@@ -209,16 +209,6 @@ $menu = $menuResponse['status'] ? $menuResponse['data'] : null;
                             <br>
                             <small>Updated: <?= date('d M Y', strtotime($menu['_update_dt'])) ?></small>
                         </div>
-
-                        <!-- CTA -->
-                        <div class="text-center p-3">
-                            <button class="btn btn-danger px-4 share-btn"
-                                data-menu="<?= htmlspecialchars($menu['_menu_code']) ?>"
-                                data-id="<?= $menu['_id'] ?>">
-                                <i class="bi bi-share-fill me-2"></i> Share This Menu
-                            </button>
-                        </div>
-
                     </div>
 
                 </div>
