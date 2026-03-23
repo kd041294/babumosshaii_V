@@ -164,8 +164,8 @@ $mediaRes = getEventReviewMedias();
                                                 <div class="col-md-6">
                                                     <iframe
                                                         class="video-frame"
-                                                        src="<?= htmlspecialchars($video['url']) ?>?autoplay=1&mute=1"
-                                                        allow="autoplay; encrypted-media"
+                                                        src="<?= htmlspecialchars($video['url']) ?>?rel=0"
+                                                        allow="encrypted-media"
                                                         allowfullscreen>
                                                     </iframe>
                                                 </div>
