@@ -248,7 +248,7 @@ $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
               <div class="d-flex align-items-center gap-2">
 
                 <span class="badge bg-success"><?= $menu['_arrange'] ?></span>
-                <?php $encryptedId = encryptData($menu['id']); ?>
+                <?php $encryptedId = encryptData($menu['_id']); ?>
 
                 <button
                   class="share-btn"
