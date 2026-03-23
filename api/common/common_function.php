@@ -35,32 +35,45 @@ function encryptData($data)
 function decryptData($data)
 {
     $method = "AES-256-CBC";
-
     $key = hash('sha256', ENCRYPTION_KEY, true);
 
-    // Convert URL-safe back
-    $data = str_replace(['-','_'], ['+','/'], $data);
-    $decoded = base64_decode($data);
+    // ✅ STEP 1: Fix URL issues
+    $data = str_replace(['-', '_'], ['+', '/'], $data);
 
-    if (!$decoded) return false;
+    // ✅ STEP 2: Fix missing padding
+    $mod4 = strlen($data) % 4;
+    if ($mod4) {
+        $data .= substr('====', $mod4);
+    }
+
+    $decoded = base64_decode($data, true);
+    if ($decoded === false) {
+        return false;
+    }
 
     $ivLength = openssl_cipher_iv_length($method);
 
-    // Extract parts
-    $iv = substr($decoded, 0, $ivLength);
-    $hmac = substr($decoded, $ivLength, 32);
-    $encrypted = substr($decoded, $ivLength + 32);
-
-    // Verify HMAC
-    $calculated_hmac = hash_hmac('sha256', $encrypted, $key, true);
-
-    if (!hash_equals($hmac, $calculated_hmac)) {
-        return false; // ❌ Tampered data
+    // ✅ STEP 3: Validate length
+    if (strlen($decoded) < ($ivLength + 32)) {
+        return false;
     }
 
-    // Decrypt
-    return openssl_decrypt($encrypted, $method, $key, OPENSSL_RAW_DATA, $iv);
+    $iv        = substr($decoded, 0, $ivLength);
+    $hmac      = substr($decoded, $ivLength, 32);
+    $encrypted = substr($decoded, $ivLength + 32);
+
+    // ✅ STEP 4: Verify HMAC
+    $calcHmac = hash_hmac('sha256', $encrypted, $key, true);
+    if (!hash_equals($hmac, $calcHmac)) {
+        return false;
+    }
+
+    // ✅ STEP 5: Decrypt
+    $decrypted = openssl_decrypt($encrypted, $method, $key, OPENSSL_RAW_DATA, $iv);
+
+    return $decrypted;
 }
+
 //Function to save call back request using query from db_queries.php
 function saveCallBackRequest($fullName, $contactNumber, $email, $expectedHeads, $eventType, $eventLocation, $eventDate, $additionalNotes)
 {

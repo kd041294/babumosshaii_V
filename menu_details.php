@@ -7,10 +7,8 @@ if (!isset($_GET['id'])) {
 
 $encryptedId = $_GET['id'];
 $menuId = decryptData($encryptedId);
-$menuResponse = get_bm_menus_by_id($menuId, 1);
+$menuResponse = get_bm_menus_by_id($id, 1);
 $menu = $menuResponse['status'] ? $menuResponse['data'] : null;
-
-echo $menuId;
 ?>
 
 <title>Menu Details | Babumosshai</title>
