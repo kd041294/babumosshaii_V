@@ -248,12 +248,12 @@ $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
               <div class="d-flex align-items-center gap-2">
 
                 <span class="badge bg-success"><?= $menu['_arrange'] ?></span>
-
+                <?php $encryptedId = urlencode(encryptData($menu['id'])); ?>
                 <!-- Share Button -->
                 <button
                   class="share-btn"
                   data-menu="<?= htmlspecialchars($menu['_menu_code']) ?>"
-                  data-id="<?= $menu['_id'] ?>"
+                  data-id="<?= $encryptedId ?>"
                   title="Share Menu">
                   <i class="bi bi-share-fill"></i>
                 </button>

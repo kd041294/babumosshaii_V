@@ -1,8 +1,13 @@
 <?php
 require 'template_header.php';
 
-$id = $_GET['id'] ?? 0;
-$menuResponse = get_bm_menus_by_id($id, 1);
+if (!isset($_GET['id'])) {
+    die("Invalid request");
+}
+
+$encryptedId = $_GET['id'];
+$menuId = decryptData($encryptedId);
+$menuResponse = get_bm_menus_by_id($menuId, 1);
 $menu = $menuResponse['status'] ? $menuResponse['data'] : null;
 ?>
 
