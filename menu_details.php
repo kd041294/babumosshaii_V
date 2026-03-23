@@ -10,7 +10,6 @@ $menuId = decryptData($encryptedId);
 $menuResponse = get_bm_menus_by_id($menuId, 1);
 $menu = $menuResponse['status'] ? $menuResponse['data'] : null;
 
-echo '<span class="text-light">'.$menuId.'</span>';
 ?>
 
 <title>Menu Details | Babumosshai</title>
