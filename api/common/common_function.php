@@ -8,8 +8,23 @@
  */
 function encryptData($data)
 {
-    $encryptionMethod = "AES-256-CBC";
-    return base64_encode(openssl_encrypt($data, $encryptionMethod, ENCRYPTION_KEY, 0, ENCRYPTION_IV));
+    $method = "AES-256-CBC";
+
+    $key = hash('sha256', ENCRYPTION_KEY, true); // 32 bytes key
+    $ivLength = openssl_cipher_iv_length($method);
+    $iv = random_bytes($ivLength);
+
+    // Encrypt
+    $encrypted = openssl_encrypt($data, $method, $key, OPENSSL_RAW_DATA, $iv);
+
+    // Generate HMAC (tamper protection)
+    $hmac = hash_hmac('sha256', $encrypted, $key, true);
+
+    // Combine → iv + hmac + encrypted
+    $final = base64_encode($iv . $hmac . $encrypted);
+
+    // URL safe
+    return str_replace(['+','/','='], ['-','_',''], $final);
 }
 /**
  * Decrypt a string
@@ -19,8 +34,32 @@ function encryptData($data)
  */
 function decryptData($data)
 {
-    $encryptionMethod = "AES-256-CBC";
-    return openssl_decrypt(base64_decode($data), $encryptionMethod, ENCRYPTION_KEY, 0, ENCRYPTION_IV);
+    $method = "AES-256-CBC";
+
+    $key = hash('sha256', ENCRYPTION_KEY, true);
+
+    // Convert URL-safe back
+    $data = str_replace(['-','_'], ['+','/'], $data);
+    $decoded = base64_decode($data);
+
+    if (!$decoded) return false;
+
+    $ivLength = openssl_cipher_iv_length($method);
+
+    // Extract parts
+    $iv = substr($decoded, 0, $ivLength);
+    $hmac = substr($decoded, $ivLength, 32);
+    $encrypted = substr($decoded, $ivLength + 32);
+
+    // Verify HMAC
+    $calculated_hmac = hash_hmac('sha256', $encrypted, $key, true);
+
+    if (!hash_equals($hmac, $calculated_hmac)) {
+        return false; // ❌ Tampered data
+    }
+
+    // Decrypt
+    return openssl_decrypt($encrypted, $method, $key, OPENSSL_RAW_DATA, $iv);
 }
 //Function to save call back request using query from db_queries.php
 function saveCallBackRequest($fullName, $contactNumber, $email, $expectedHeads, $eventType, $eventLocation, $eventDate, $additionalNotes)
