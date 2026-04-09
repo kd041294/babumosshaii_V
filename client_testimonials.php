@@ -79,11 +79,11 @@ $mediaRes = getEventReviewMedias();
 
     <div class="container">
 
-        <div class="row mb-4 text-center">
+        <div class="row mb-4 text-center justify-content-center">
             <h3 class="fw-bold text-white">Client Testimonial's & Media</h3>
             <p class="text-white">Photos, videos & feedback from our clients</p>
+            <a class="btn btn-outline-light w-25 text-decoration-none" href="<?= REVIEW_LINK ?>">Write a review</a>
         </div>
-
         <div class="row g-4">
 
             <?php if (!empty($mediaRes)) : ?>

@@ -3,7 +3,11 @@ require 'template_header.php';
 $menuResponse = get_all_bm_menus(1);
 $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
 ?>
-<title>Wedding Menu Collection</title>
+<title>Menu Catalogue | BabuMosshaii Kitchen & Caterer's</title>
+<meta name="description"
+  content="BabuMosshaii Kitchen & Caterer's offers premium Bengali and multi-cuisine catering services in Kolkata for weddings, receptions, corporate events, birthdays, and private parties.">
+<meta name="keywords"
+  content="BabuMosshaii catering Kolkata, Bengali catering Kolkata, wedding catering Kolkata, best caterers in Kolkata, corporate catering Kolkata">
 <style>
   /* Card Container */
   .menu-grid-card {

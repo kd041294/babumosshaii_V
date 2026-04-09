@@ -1,7 +1,12 @@
 <?php
 require 'template_header.php';
 ?>
+<meta name="description"
+  content="BabuMosshaii Kitchen & Caterer's offers premium Bengali and multi-cuisine catering services in Kolkata for weddings, receptions, corporate events, birthdays, and private parties.">
+<meta name="keywords"
+  content="BabuMosshaii catering Kolkata, Bengali catering Kolkata, wedding catering Kolkata, best caterers in Kolkata, corporate catering Kolkata">
 </head>
+
 <body>
   <!-- Navbar -->
   <?= require 'navbar.php'; ?>
@@ -32,4 +37,5 @@ require 'template_header.php';
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/common.js"></script>
 </body>
+
 </html>

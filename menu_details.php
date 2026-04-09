@@ -12,8 +12,7 @@ $menu = $menuResponse['status'] ? $menuResponse['data'] : null;
 
 ?>
 
-<title>Menu Details | Babumosshai</title>
-
+<title>Menu Catalogue | BabuMosshaii Event & Co.</title>
 <!-- ✅ SEO + Share Preview -->
 <?php if ($menu): ?>
     <meta property="og:title" content="Wedding Menu - <?= htmlspecialchars($menu['_menu_code']) ?>">
@@ -21,6 +20,10 @@ $menu = $menuResponse['status'] ? $menuResponse['data'] : null;
     <meta property="og:image" content="<?= BASE_URL ?>assets/images/logo.png">
     <meta property="og:url" content="<?= BASE_URL ?>menu_details.php?id=<?= $menu['_id'] ?>">
 <?php endif; ?>
+<meta name="description"
+  content="BabuMosshaii Kitchen & Caterer's offers premium Bengali and multi-cuisine catering services in Kolkata for weddings, receptions, corporate events, birthdays, and private parties.">
+<meta name="keywords"
+  content="BabuMosshaii catering Kolkata, Bengali catering Kolkata, wedding catering Kolkata, best caterers in Kolkata, corporate catering Kolkata">
 
 <style>
     /* Card */

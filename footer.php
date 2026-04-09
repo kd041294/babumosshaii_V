@@ -5,7 +5,7 @@
             <div class="col-md-4 d-flex flex-column align-items-start justify-content-start p-4" style="background: rgba(255,255,255,0.03);">
                 <div class="d-flex align-items-center mb-3">
                     <img src="assets/images/logo.png" alt="Logo" style="height:44px;margin-right:14px;box-shadow:0 2px 12px #fff3;">
-                    <span style="font-weight:800;font-size:1.45rem;letter-spacing:1.5px;color:#fff;text-shadow:0 2px 8px #000;">BabuMosshaii</span>
+                    <span style="font-weight:800;font-size:1.75rem;letter-spacing:1.5px;color:#fff;text-shadow:0 2px 8px #000;">BabuMosshaii <span style="font-size: 45%">Event & Co.</span></span>
                 </div>
                 <p class="mb-2" style="font-size:1.08rem;color:#f8f9fa;line-height:1.7;">
                     <span style="color:#fff;font-weight:700;">BabuMosshaii</span> is dedicated to making your celebrations memorable with authentic flavors and heartfelt service.<br>
@@ -28,7 +28,7 @@
                     <a href="https://instagram.com/" target="_blank" aria-label="Instagram" class="mx-2 fs-2" style="color:#fff;transition:.2s;">
                         <i class="bi bi-instagram"></i>
                     </a>
-                    <a href="mailto:babumosshaii.official@gmail.com" aria-label="Email" class="mx-2 fs-2" style="color:#fff;transition:.2s;">
+                    <a href="mailto:info@babumosshaii.in" aria-label="Email" class="mx-2 fs-2" style="color:#fff;transition:.2s;">
                         <i class="bi bi-envelope-fill"></i>
                     </a>
                 </div>
@@ -46,17 +46,17 @@
                 </div>
                 <div class="mb-3">
                     <i class="bi bi-telephone-fill me-2 text-warning fs-5"></i>
-                    <a href="tel:+918910414656" class="text-white text-decoration-none" style="font-weight:600;font-size:1.08rem;">+91 89104 14656</a>
+                    <a href="tel:+916290184366" class="text-white text-decoration-none" style="font-weight:600;font-size:1.08rem;">+91 62901 84366</a>
                 </div>
                 <div>
                     <i class="bi bi-envelope-fill me-2 text-warning fs-5"></i>
-                    <a href="mailto:babumosshaii.official@gmail.com" class="text-white text-decoration-none" style="font-weight:600;font-size:1.08rem;">babumosshaii.official@gmail.com</a>
+                    <a href="mailto:info@babumosshaii.in" class="text-white text-decoration-none" style="font-weight:600;font-size:1.08rem;">info@babumosshaii.in</a>
                 </div>
             </div>
         </div>
         <div class="d-flex justify-content-center align-items-center mt-0 pt-3 border-top border-3 border-secondary" style="font-size:1.07rem;letter-spacing:0.7px;background:rgba(0,0,0,0.15);">
             <span class="d-inline-block py-3 text-center" style="color:#fff;font-weight:700;">
-                &copy; 2020 BabuMosshaii Kitchen & Catering
+                &copy; <?= date('Y') ?> BabuMosshaii
                 <span class="mx-2 text-white-50">|</span>
                 Crafted with <span style="font-size:1.2em; color: red;">&#10084;</span> in Kolkata
             </span>

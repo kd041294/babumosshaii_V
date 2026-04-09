@@ -24,7 +24,7 @@ function encryptData($data)
     $final = base64_encode($iv . $hmac . $encrypted);
 
     // URL safe
-    return str_replace(['+','/','='], ['-','_',''], $final);
+    return str_replace(['+', '/', '='], ['-', '_', ''], $final);
 }
 /**
  * Decrypt a string
@@ -72,6 +72,11 @@ function decryptData($data)
     $decrypted = openssl_decrypt($encrypted, $method, $key, OPENSSL_RAW_DATA, $iv);
 
     return $decrypted;
+}
+
+function safeHtml($html)
+{
+    return strip_tags($html, '<p><br><ul><ol><li><b><strong><i>');
 }
 
 //Function to save call back request using query from db_queries.php
@@ -263,7 +268,6 @@ function getEventReviewMedias()
         return [];
     }
 }
-
 function get_all_bm_menus($status = 1)
 {
     require_once __DIR__ . '/../db/db_connection.php'; // $conn PDO
@@ -327,7 +331,6 @@ function get_all_bm_menus($status = 1)
         ];
     }
 }
-
 function get_bm_menus_by_id($id, $status = 1)
 {
     require_once __DIR__ . '/../db/db_connection.php';
@@ -390,6 +393,135 @@ function get_bm_menus_by_id($id, $status = 1)
             "status"  => false,
             "message" => $e->getMessage(),
             "data"    => null
+        ];
+    }
+}
+
+
+//function to get all the mehendi package list 
+function getMehendiPackageList($is_approved = 1, $status = 1)
+{
+    require_once __DIR__ . '/../db/db_connection.php';
+    require_once __DIR__ . '/../db/db_queries.php';
+
+    try {
+        // 🔥 USE CORRECT DATABASE
+        $conn = getDBConnection('db_artist');
+
+        $stmt = $conn->prepare($get_mehendi_package_list_query);
+
+        $stmt->execute([
+            ':is_approved' => $is_approved,
+            ':status' => $status
+        ]);
+
+        $mehendiPackageList = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return [
+            "status" => true,
+            "data" => $mehendiPackageList
+        ];
+    } catch (PDOException $e) {
+        return [
+            "status" => false,
+            "message" => $e->getMessage(), // 🔥 important for debugging
+            "data" => []
+        ];
+    }
+}
+
+//function to get mehendi package details by id
+function getMehendiPackageDetailsById($id, $is_approved = 1, $status = 1)
+{
+    require_once __DIR__ . '/../db/db_connection.php';
+    require_once __DIR__ . '/../db/db_queries.php';
+
+    try {
+        $conn = getDBConnection('db_artist');
+
+        $stmt = $conn->prepare($get_mehendi_package_details_by_id_query);
+
+        $stmt->execute([
+            ':id' => $id,
+            ':is_approved' => $is_approved,
+            ':status' => $status
+        ]);
+
+        $package = $stmt->fetch(PDO::FETCH_ASSOC); // ✅ FIXED
+
+        return [
+            "status" => $package ? true : false,
+            "data" => $package ?: []
+        ];
+    } catch (PDOException $e) {
+        return [
+            "status" => false,
+            "message" => $e->getMessage(),
+            "data" => []
+        ];
+    }
+}
+
+//function to get all the mehendi package list 
+function getMakeupPackageList($is_approved = 1, $status = 1)
+{
+    require_once __DIR__ . '/../db/db_connection.php';
+    require_once __DIR__ . '/../db/db_queries.php';
+
+    try {
+        // 🔥 USE CORRECT DATABASE
+        $conn = getDBConnection('db_artist');
+
+        $stmt = $conn->prepare($get_makeup_package_list_query);
+
+        $stmt->execute([
+            ':is_approved' => $is_approved,
+            ':status' => $status
+        ]);
+
+        $makeupPackageList = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return [
+            "status" => true,
+            "data" => $makeupPackageList
+        ];
+    } catch (PDOException $e) {
+        return [
+            "status" => false,
+            "message" => $e->getMessage(), // 🔥 important for debugging
+            "data" => []
+        ];
+    }
+}
+
+//function to get makeup package details by id
+function getMakeupPackageDetailsById($id, $is_approved = 1, $status = 1)
+{
+    require_once __DIR__ . '/../db/db_connection.php';
+    require_once __DIR__ . '/../db/db_queries.php';
+
+    try {
+        $conn = getDBConnection('db_artist');
+
+        $stmt = $conn->prepare($get_makeup_package_details_by_id_query);
+
+        $stmt->execute([
+            ':id' => $id,
+            ':is_approved' => $is_approved,
+            ':status' => $status
+        ]);
+
+        $package = $stmt->fetch(PDO::FETCH_ASSOC); // ✅ FIXED
+
+        return [
+            "status" => $package ? true : false,
+            "data" => $package ?: []
+        ];
+    } catch (PDOException $e) {
+        return [
+            "status" => false,
+            "message" => $e->getMessage(),
+            "data" => []
         ];
     }
 }

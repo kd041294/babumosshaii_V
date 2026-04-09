@@ -3,9 +3,9 @@
   <span class="close-btn" id="closeQuickConnect">&times;</span>
   <h5 class="mb-3"><i class="bi bi-lightning-charge-fill text-warning me-2"></i>Quick Connect</h5>
   <hr class="mt-0 mb-2">
-  <a href="tel:+918910414656"><i class="bi bi-telephone-fill me-2 text-success"></i>+91 89104 14656</a>
+  <a href="tel:+916290184366"><i class="bi bi-telephone-fill me-2 text-success"></i>+91 62901 84366</a>
   <a href="mailto:info@babumosshaii.in"><i class="bi bi-envelope-fill me-2 text-danger"></i>info@babumosshaii.in</a>
-  <a href="https://wa.me/918910414656" target="_blank"><i class="bi bi-whatsapp me-2 text-success"></i>WhatsApp</a>
+  <a href="https://wa.me/916290184366" target="_blank"><i class="bi bi-whatsapp me-2 text-success"></i>WhatsApp</a>
   <a href="https://www.facebook.com/BabuMosshaii.Official" target="_blank"><i class="bi bi-facebook me-2 text-primary"></i>Facebook</a>
   <a href="https://instagram.com/babumosshaii20.official" target="_blank"><i class="bi bi-instagram me-2 text-danger"></i>Instagram</a>
 </div>

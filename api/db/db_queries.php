@@ -325,3 +325,259 @@ $get_all_bm_menu_by_id = "SELECT
     WHERE
     id = ?
     AND tbm.status = ?";
+
+//get mehendi artists list query
+$get_mehendi_package_list_query = "SELECT
+    mep.id AS _id,
+    mep.package_code AS _package_code,
+    mep.package_category AS _category,
+    mep.package_title AS _package_title,
+    mep.short_title AS _short_title,
+    mep.description AS _description,
+    mep.price AS _price,
+    mep.discount_type AS _discount_type,
+    mep.discount_value AS _discount_value,
+    mep.final_price AS _final_price,
+    mep.service_duration AS _service_duration,
+    mep.person_covered AS _person_covered,
+    mep.number_of_artist AS _no_of_artist,
+    mep.package_includes AS _package_includes,
+    mep.service_validity AS _service_validity,
+    mep.features AS _features,
+    mep.created_dt AS _created_dt,
+    mep.updated_dt AS _last_updated,
+    mep.is_approved AS _is_approved,
+    mep.approved_dt AS _approved_on,
+    mep.status AS _status,
+
+    -- ✅ NEW FIELD
+    ui.company_name AS _company_name,
+    ui.serviceable_area AS _serviceable_area,
+
+    -- Images
+    GROUP_CONCAT(mpi.image_url SEPARATOR '||') AS _image_urls,
+    GROUP_CONCAT(mpi.public_id SEPARATOR '||') AS _public_ids
+
+FROM mehendi_packages AS mep
+
+-- ✅ JOIN USER TABLE
+LEFT JOIN user_info AS ui
+    ON mep.user_id = ui.id
+    AND mep.user_uniq_id = ui.unique_id
+
+-- Images
+LEFT JOIN mehendi_package_images AS mpi
+    ON mep.id = mpi.package_id
+
+WHERE mep.is_approved = :is_approved
+AND mep.status = :status
+
+GROUP BY mep.id";
+
+//get mehendi package details by id query
+$get_mehendi_package_details_by_id_query = <<<SQL
+SELECT
+    mep.id AS _id,
+    mep.package_code AS _package_code,
+    mep.package_category AS _category,
+    mep.package_title AS _package_title,
+    mep.short_title AS _short_title,
+    mep.description AS _description,
+    mep.price AS _price,
+    mep.discount_type AS _discount_type,
+    mep.discount_value AS _discount_value,
+    mep.final_price AS _final_price,
+    mep.service_duration AS _service_duration,
+    mep.person_covered AS _person_covered,
+    mep.number_of_artist AS _no_of_artist,
+    mep.package_includes AS _package_includes,
+    mep.service_validity AS _service_validity,
+    mep.features AS _features,
+    mep.created_dt AS _created_dt,
+    mep.updated_dt AS _last_updated,
+    mep.is_approved AS _is_approved,
+    mep.approved_dt AS _approved_on,
+    mep.status AS _status,
+
+    ui.id AS _user_id,
+    ui.unique_id AS _user_uniq_id,
+    ui.company_name AS _company_name,
+    ui.serviceable_area AS _serviceable_area,
+
+    GROUP_CONCAT(DISTINCT mpi.image_url SEPARATOR '||') AS _image_urls,
+
+    COUNT(DISTINCT ur.id) AS _total_reviews,
+    ROUND(AVG(ur.rating),1) AS _avg_rating,
+
+    GROUP_CONCAT(
+        DISTINCT CONCAT(
+            '{"name":"', ur.customer_name,
+            '","rating":"', ur.rating,
+            '","msg":"', REPLACE(ur.review_message, '"', '\\"'),
+            '"}'
+        ) SEPARATOR '||'
+    ) AS _reviews_json
+
+FROM mehendi_packages AS mep
+
+LEFT JOIN user_info AS ui
+    ON mep.user_id = ui.id
+    AND mep.user_uniq_id = ui.unique_id
+
+LEFT JOIN mehendi_package_images AS mpi
+    ON mep.id = mpi.package_id
+
+LEFT JOIN user_reviews AS ur
+    ON mep.user_id = ur.user_id
+    AND mep.user_uniq_id = ur.user_unique_id
+
+WHERE mep.id = :id
+AND mep.is_approved = :is_approved
+AND mep.status = :status
+
+GROUP BY mep.id
+SQL;
+
+//query to save artist inquiry
+$save_artist_inquiry_query = "INSERT INTO booking_leads(
+    package_id,
+    package_code,
+    service_type, 
+    customer_name,
+    customer_phone,
+    customer_email,
+    event_date,
+    event_time,
+    event_location,
+    message,
+    number_of_people,
+    artist_id,
+    artist_uniq_id
+) VALUES (
+    :package_id,
+    :package_code,
+    :service_type,
+    :customer_name,
+    :customer_phone,
+    :customer_email,
+    :event_date,
+    :event_time,
+    :event_location,
+    :message,
+    :number_of_people,
+    :artist_id,
+    :artist_uniq_id
+)";
+
+//get makeup artists list query
+$get_makeup_package_list_query = "SELECT
+    mep.id AS _id,
+    mep.package_code AS _package_code,
+    mep.package_category AS _category,
+    mep.package_title AS _package_title,
+    mep.short_title AS _short_title,
+    mep.description AS _description,
+    mep.price AS _price,
+    mep.discount_type AS _discount_type,
+    mep.discount_value AS _discount_value,
+    mep.final_price AS _final_price,
+    mep.service_duration AS _service_duration,
+    mep.person_covered AS _person_covered,
+    mep.number_of_artist AS _no_of_artist,
+    mep.package_includes AS _package_includes,
+    mep.service_validity AS _service_validity,
+    mep.features AS _features,
+    mep.created_dt AS _created_dt,
+    mep.updated_dt AS _last_updated,
+    mep.is_approved AS _is_approved,
+    mep.approved_dt AS _approved_on,
+    mep.status AS _status,
+
+    -- ✅ NEW FIELD
+    ui.company_name AS _company_name,
+    ui.serviceable_area AS _serviceable_area,
+
+    -- Images
+    GROUP_CONCAT(mpi.image_url SEPARATOR '||') AS _image_urls,
+    GROUP_CONCAT(mpi.public_id SEPARATOR '||') AS _public_ids
+
+FROM makeup_packages AS mep
+
+-- ✅ JOIN USER TABLE
+LEFT JOIN user_info AS ui
+    ON mep.user_id = ui.id
+    AND mep.user_uniq_id = ui.unique_id
+
+-- Images
+LEFT JOIN makeup_package_images AS mpi
+    ON mep.id = mpi.package_id
+
+WHERE mep.is_approved = :is_approved
+AND mep.status = :status
+
+GROUP BY mep.id";
+
+
+//get makeup package details by id query
+$get_makeup_package_details_by_id_query = <<<SQL
+SELECT
+    mep.id AS _id,
+    mep.package_code AS _package_code,
+    mep.package_category AS _category,
+    mep.package_title AS _package_title,
+    mep.short_title AS _short_title,
+    mep.description AS _description,
+    mep.price AS _price,
+    mep.discount_type AS _discount_type,
+    mep.discount_value AS _discount_value,
+    mep.final_price AS _final_price,
+    mep.service_duration AS _service_duration,
+    mep.person_covered AS _person_covered,
+    mep.number_of_artist AS _no_of_artist,
+    mep.package_includes AS _package_includes,
+    mep.service_validity AS _service_validity,
+    mep.features AS _features,
+    mep.created_dt AS _created_dt,
+    mep.updated_dt AS _last_updated,
+    mep.is_approved AS _is_approved,
+    mep.approved_dt AS _approved_on,
+    mep.status AS _status,
+
+    ui.id AS _user_id,
+    ui.unique_id AS _user_uniq_id,
+    ui.company_name AS _company_name,
+    ui.serviceable_area AS _serviceable_area,
+
+    GROUP_CONCAT(DISTINCT mpi.image_url SEPARATOR '||') AS _image_urls,
+
+    COUNT(DISTINCT ur.id) AS _total_reviews,
+    ROUND(AVG(ur.rating),1) AS _avg_rating,
+
+    GROUP_CONCAT(
+        DISTINCT CONCAT(
+            '{"name":"', ur.customer_name,
+            '","rating":"', ur.rating,
+            '","msg":"', REPLACE(ur.review_message, '"', '\\"'),
+            '"}'
+        ) SEPARATOR '||'
+    ) AS _reviews_json
+
+FROM makeup_packages AS mep
+
+LEFT JOIN user_info AS ui
+    ON mep.user_id = ui.id
+    AND mep.user_uniq_id = ui.unique_id
+
+LEFT JOIN makeup_package_images AS mpi
+    ON mep.id = mpi.package_id
+
+LEFT JOIN user_reviews AS ur
+    ON mep.user_id = ur.user_id
+    AND mep.user_uniq_id = ur.user_unique_id
+
+WHERE mep.id = :id
+AND mep.is_approved = :is_approved
+AND mep.status = :status
+
+GROUP BY mep.id
+SQL;
