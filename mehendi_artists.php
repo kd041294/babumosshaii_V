@@ -218,6 +218,23 @@ $packages = ($resultMehendi['status'] && !empty($resultMehendi['data']))
         border-radius: 10px;
         font-weight: bold;
     }
+
+    .coming-soon-box {
+        background: linear-gradient(135deg, #fff5f2, #ffe3dc);
+        border-radius: 18px;
+        border: 1px dashed #f99583;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .coming-soon-box h4 {
+        color: #333;
+    }
+
+    .coming-soon-box p {
+        max-width: 500px;
+        margin: auto;
+        font-size: 14px;
+    }
 </style>
 </head>
 
@@ -425,8 +442,27 @@ $packages = ($resultMehendi['status'] && !empty($resultMehendi['data']))
 
             <?php else : ?>
 
-                <div class="col-12 text-center">
-                    <h5>No Mehendi Packages Found 😢</h5>
+                <div class="col-12">
+                    <div class="coming-soon-box text-center p-5">
+
+                        <div class="mb-3">
+                            <i class="bi bi-stars fs-1 text-warning"></i>
+                        </div>
+
+                        <h4 class="fw-bold mb-2">Exciting Mehendi Packages Coming Soon 🎉</h4>
+
+                        <p class="text-muted mb-3">
+                            We're onboarding talented mehendi artists in your area.
+                            Stay tuned — amazing packages will be available shortly!
+                        </p>
+
+                        <button class="btn btn-book px-4"
+                            data-bs-toggle="modal"
+                            data-bs-target="#bookingModal">
+                            <i class="bi bi-bell-fill me-1"></i> Notify Me
+                        </button>
+
+                    </div>
                 </div>
 
             <?php endif; ?>
@@ -455,4 +491,5 @@ $packages = ($resultMehendi['status'] && !empty($resultMehendi['data']))
         <div class="loader-spinner"></div>
     </div>
 </body>
+
 </html>
