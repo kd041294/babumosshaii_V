@@ -433,7 +433,7 @@ $packages = ($resultMakeup['status'] && !empty($resultMakeup['data']))
 
         </div>
         <div id="noResults" class="text-center py-4 text-white" style="display:none; color: #eee;">
-            <h5 class="text-muted">No result to show 😢</h5>
+            <h5 class="text-muted">No package to show 😢</h5>
         </div>
     </div>
 

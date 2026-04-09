@@ -30,8 +30,18 @@ if ($isLocal) {
     define('ENVIRONMENT', 'development');
     define('BASE_URL', 'https://babumosshaii.in/');
     define('REVIEW_LINK', 'https://review.babumosshaii.in/');
-    define('DB_HOST', '127.0.0.1');
-    define('DB_NAME', 'u469745365_babu_20');
-    define('DB_USER', 'u469745365_babumosshaii');
-    define('DB_PASS', 'kd961194KD@');
+    $databases = [
+        'db_bm' => [
+            'host'   => '127.0.0.1',
+            'dbname' => 'u469745365_babu_20',
+            'user'   => 'u469745365_babumosshaii',
+            'pass'   => 'kd961194KD@'
+        ],
+        'db_artist' => [
+            'host'   => '127.0.0.1',
+            'dbname' => 'u469745365_bm_artist',
+            'user'   => 'u469745365_artist',
+            'pass'   => 'kd961194KD@'
+        ]
+    ];
 }
