@@ -41,7 +41,7 @@ if ($isLocal) {
             'host'   => '127.0.0.1',
             'dbname' => 'u469745365_bm_artist',
             'user'   => 'u469745365_artist',
-            'pass'   => 'kd961194KD@'
+            'pass'   => 'krishuKD@961194'
         ]
     ];
 }
