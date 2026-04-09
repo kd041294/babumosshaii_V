@@ -250,6 +250,7 @@ $packages = ($resultMakeup['status'] && !empty($resultMakeup['data']))
         </div>
     </section>
 
+    <?php if (!empty($packages)) : ?>
     <!-- ===== FILTER ===== -->
     <div class="container">
         <div class="filter-box row align-items-center g-2">
@@ -293,6 +294,7 @@ $packages = ($resultMakeup['status'] && !empty($resultMakeup['data']))
 
         </div>
     </div>
+    <?php endif; ?>
 
     <!-- ===== ARTIST LIST ===== -->
     <div class="container py-5">
