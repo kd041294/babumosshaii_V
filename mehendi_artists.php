@@ -251,49 +251,49 @@ $packages = ($resultMehendi['status'] && !empty($resultMehendi['data']))
     </section>
 
     <?php if (!empty($packages)) : ?>
-    <!-- ===== FILTER ===== -->
-    <div class="container">
-        <div class="filter-box row align-items-center g-2">
+        <!-- ===== FILTER ===== -->
+        <div class="container">
+            <div class="filter-box row align-items-center g-2">
 
-            <!-- Search -->
-            <div class="col-md-4">
-                <input type="text"
-                    id="searchInput"
-                    class="form-control"
-                    placeholder="Search Artist...">
+                <!-- Search -->
+                <div class="col-md-4">
+                    <input type="text"
+                        id="searchInput"
+                        class="form-control"
+                        placeholder="Search Artist...">
+                </div>
+
+                <!-- Location (INPUT now) -->
+                <div class="col-md-3">
+                    <input type="text"
+                        id="locationInput"
+                        class="form-control"
+                        placeholder="Search Location...">
+                </div>
+
+                <!-- Price -->
+                <div class="col-md-3">
+                    <select id="priceFilter" class="form-select">
+                        <option value="">Price Range</option>
+
+                        <?php foreach ($priceRanges as $range) : ?>
+                            <option value="<?= $range['min'] . '-' . ($range['max'] ?? '') ?>">
+                                <?= $range['label'] ?>
+                            </option>
+                        <?php endforeach; ?>
+
+                    </select>
+                </div>
+
+                <!-- Reset Button -->
+                <div class="col-md-2">
+                    <button class="btn btn-reset w-100" onclick="resetFilters()">
+                        <i class="bi bi-arrow-clockwise me-1"></i> Reset
+                    </button>
+                </div>
+
             </div>
-
-            <!-- Location (INPUT now) -->
-            <div class="col-md-3">
-                <input type="text"
-                    id="locationInput"
-                    class="form-control"
-                    placeholder="Search Location...">
-            </div>
-
-            <!-- Price -->
-            <div class="col-md-3">
-                <select id="priceFilter" class="form-select">
-                    <option value="">Price Range</option>
-
-                    <?php foreach ($priceRanges as $range) : ?>
-                        <option value="<?= $range['min'] . '-' . ($range['max'] ?? '') ?>">
-                            <?= $range['label'] ?>
-                        </option>
-                    <?php endforeach; ?>
-
-                </select>
-            </div>
-
-            <!-- Reset Button -->
-            <div class="col-md-2">
-                <button class="btn btn-reset w-100" onclick="resetFilters()">
-                    <i class="bi bi-arrow-clockwise me-1"></i> Reset
-                </button>
-            </div>
-
         </div>
-    </div>
     <?php endif; ?>
 
     <!-- ===== ARTIST LIST ===== -->
@@ -412,7 +412,12 @@ $packages = ($resultMehendi['status'] && !empty($resultMehendi['data']))
                                     <?= htmlspecialchars($pkg['_short_title']) ?>
                                 </div>
 
-                                <div class="rating mb-2">⭐ 4.7</div>
+                                <div class="rating mb-1">⭐ 4.7</div>
+
+                                <div class="views text-muted small mb-2">
+                                    <i class="bi bi-eye me-1"></i>
+                                    <?= (int)($pkg['_views_count'] ?? 0) ?> views
+                                </div>
 
                                 <div class="d-flex justify-content-between align-items-center">
 

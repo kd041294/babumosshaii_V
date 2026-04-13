@@ -79,6 +79,37 @@ function safeHtml($html)
     return strip_tags($html, '<p><br><ul><ol><li><b><strong><i>');
 }
 
+function updatePackageViewCount($conn, $id, $category)
+{
+    try {
+
+        $id = (int)$id;
+
+        $allowed = ['mehendi', 'makeup'];
+        if (!in_array($category, $allowed)) {
+            return false;
+        }
+
+        if ($category === 'mehendi') {
+            $query = "UPDATE mehendi_packages 
+                      SET views_count = views_count + 1 
+                      WHERE id = ? AND status = 1";
+        } elseif ($category === 'makeup') {
+            $query = "UPDATE makeup_packages 
+                      SET views_count = views_count + 1 
+                      WHERE id = ? AND status = 1";
+        }
+
+        $stmt = $conn->prepare($query);
+        $stmt->execute([$id]);
+
+        return $stmt->rowCount() > 0;
+    } catch (PDOException $e) {
+        error_log("Error updating view count: " . $e->getMessage());
+        return false;
+    }
+}
+
 //Function to save call back request using query from db_queries.php
 function saveCallBackRequest($fullName, $contactNumber, $email, $expectedHeads, $eventType, $eventLocation, $eventDate, $additionalNotes)
 {
@@ -439,6 +470,8 @@ function getMehendiPackageDetailsById($id, $is_approved = 1, $status = 1)
     try {
         $conn = getDBConnection('db_artist');
 
+        $id = (int)$id; // ✅ safety
+
         $stmt = $conn->prepare($get_mehendi_package_details_by_id_query);
 
         $stmt->execute([
@@ -447,7 +480,26 @@ function getMehendiPackageDetailsById($id, $is_approved = 1, $status = 1)
             ':status' => $status
         ]);
 
-        $package = $stmt->fetch(PDO::FETCH_ASSOC); // ✅ FIXED
+        $package = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // ✅ Only increment if package exists
+        if ($package) {
+
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+
+            if (!isset($_SESSION['viewed_packages'])) {
+                $_SESSION['viewed_packages'] = [];
+            }
+
+            if (!in_array($id, $_SESSION['viewed_packages'])) {
+
+                $_SESSION['viewed_packages'][] = $id;
+
+                updatePackageViewCount($conn, $id, 'mehendi');
+            }
+        }
 
         return [
             "status" => $package ? true : false,
@@ -503,6 +555,8 @@ function getMakeupPackageDetailsById($id, $is_approved = 1, $status = 1)
     try {
         $conn = getDBConnection('db_artist');
 
+        $id = (int)$id;
+
         $stmt = $conn->prepare($get_makeup_package_details_by_id_query);
 
         $stmt->execute([
@@ -511,7 +565,26 @@ function getMakeupPackageDetailsById($id, $is_approved = 1, $status = 1)
             ':status' => $status
         ]);
 
-        $package = $stmt->fetch(PDO::FETCH_ASSOC); // ✅ FIXED
+        $package = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // ✅ Only increment if package exists
+        if ($package) {
+
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+
+            if (!isset($_SESSION['viewed_packages'])) {
+                $_SESSION['viewed_packages'] = [];
+            }
+
+            if (!in_array($id, $_SESSION['viewed_packages'])) {
+
+                $_SESSION['viewed_packages'][] = $id;
+
+                updatePackageViewCount($conn, $id, 'makeup');
+            }
+        }
 
         return [
             "status" => $package ? true : false,

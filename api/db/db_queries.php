@@ -330,6 +330,7 @@ $get_all_bm_menu_by_id = "SELECT
 $get_mehendi_package_list_query = "SELECT
     mep.id AS _id,
     mep.package_code AS _package_code,
+    mep.views_count AS _views_count,
     mep.package_category AS _category,
     mep.package_title AS _package_title,
     mep.short_title AS _short_title,
@@ -473,6 +474,7 @@ $save_artist_inquiry_query = "INSERT INTO booking_leads(
 $get_makeup_package_list_query = "SELECT
     mep.id AS _id,
     mep.package_code AS _package_code,
+    mep.views_count AS _views_count,
     mep.package_category AS _category,
     mep.package_title AS _package_title,
     mep.short_title AS _short_title,

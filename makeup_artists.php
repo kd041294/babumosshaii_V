@@ -413,6 +413,10 @@ $packages = ($resultMakeup['status'] && !empty($resultMakeup['data']))
                                 </div>
 
                                 <div class="rating mb-2">⭐ 4.7</div>
+                                <div class="views text-muted small mb-2">
+                                    <i class="bi bi-eye me-1"></i>
+                                    <?= (int)($pkg['_views_count'] ?? 0) ?> views
+                                </div>
 
                                 <div class="d-flex justify-content-between align-items-center">
 

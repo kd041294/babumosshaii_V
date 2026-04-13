@@ -33,10 +33,10 @@
                         href="<?= $routes['makeup'] ?>">Makeup Package</a>
                 </li>
                 
-                <!-- <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link <?= ($fileName == 'banquets_list' || $fileName == 'banquet_details') ? 'active' : '' ?>"
                         href="<?= $routes['banquet_list'] ?>">Banquet Halls</a>
-                </li> -->
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link <?= ($fileName == 'client_testimonials') ? 'active' : '' ?>"
