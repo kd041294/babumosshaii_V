@@ -598,3 +598,49 @@ function getMakeupPackageDetailsById($id, $is_approved = 1, $status = 1)
         ];
     }
 }
+
+//function to get artist gallery images
+function getArtistGalleryImages($artist_id, $artist_uniq_id)
+{
+    require_once __DIR__ . '/../db/db_connection.php';
+
+    try {
+        $conn = getDBConnection('db_artist');
+
+        // ✅ FIXED QUERY
+        $query = "SELECT  
+        ug.media_type AS _media_type,
+        ug.media_url AS _media_url,
+        ug.public_id AS _public_id,
+        ug.title AS _title,
+        ug.description AS _desc,
+        ug.create_dt AS _created_on,
+        ug.update_dt AS _last_updated
+        FROM user_gallary AS ug 
+        WHERE ug.user_id = :artist_id
+        AND ug.user_uniq_id = :artist_uniq_id
+        ORDER BY ug.create_dt DESC";
+
+        $stmt = $conn->prepare($query);
+
+        $stmt->execute([
+            ':artist_id' => $artist_id,
+            ':artist_uniq_id' => $artist_uniq_id
+        ]);
+
+        // ✅ MULTIPLE RESULTS
+        $gallery = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return [
+            "status" => !empty($gallery),
+            "data" => $gallery
+        ];
+    } catch (PDOException $e) {
+        return [
+            "status" => false,
+            "message" => $e->getMessage(),
+            "data" => []
+        ];
+    }
+}
+

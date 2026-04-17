@@ -91,3 +91,122 @@ $(document).on("click", "#submitInquiry", function() {
     });
 
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const modal = document.getElementById('reviewModal');
+
+    // 🎯 MODAL PREFILL
+    modal.addEventListener('show.bs.modal', function(event) {
+
+        const btn = event.relatedTarget;
+
+        const packageId = btn.getAttribute('data-package-id');
+        const artistId = btn.getAttribute('data-artist-id');
+        const artistUniqId = btn.getAttribute('data-artist-uniq-id');
+
+        const packageName = btn.getAttribute('data-package-name');
+        const artistName = btn.getAttribute('data-artist-name');
+
+        document.getElementById('modalPackage').textContent = packageName;
+        document.getElementById('modalArtist').textContent = artistName;
+
+        document.getElementById('packageId').value = packageId;
+        document.getElementById('artistId').value = artistId;
+        document.getElementById('artistUniqId').value = artistUniqId;
+    });
+
+    // ⭐ STAR RATING
+    const stars = document.querySelectorAll('.star-rating i');
+    const ratingInput = document.getElementById('ratingValue');
+
+    stars.forEach((star, index) => {
+        star.addEventListener('click', function() {
+
+            let value = this.getAttribute('data-value');
+            ratingInput.value = value;
+
+            stars.forEach(s => s.classList.remove('active'));
+
+            for (let i = 0; i < value; i++) {
+                stars[i].classList.add('active');
+            }
+        });
+    });
+
+    // 🚀 SUBMIT (jQuery AJAX)
+    $('.modal-footer .btn-danger').on('click', function() {
+
+        const name = $('#userName').val().trim();
+        const email = $('#userEmail').val().trim();
+        const date = $('#eventDate').val();
+        const rating = $('#ratingValue').val();
+        const message = $('#reviewMessage').val().trim();
+
+        const packageId = $('#packageId').val();
+        const artistId = $('#artistId').val();
+        const artistUniqId = $('#artistUniqId').val();
+        const serviceType = $('#serviceType').val();
+
+        // ✅ VALIDATION
+        if (!name || !email || !date || rating == 0 || !message) {
+            showToast("Please fill all fields and select rating ⭐", "error");
+            return;
+        }
+
+        const data = {
+            name,
+            email,
+            event_date: date,
+            rating,
+            message,
+            package_id: packageId,
+            artist_id: artistId,
+            artist_uniq_id: artistUniqId,
+            service_type: serviceType
+        };
+
+        $.ajax({
+            url: BASE_URL + "api/api_save_artist_review.php",
+            type: "POST",
+            data: data,
+
+            beforeSend: function() {
+                showLoader();
+            },
+
+            success: function(response) {
+
+                if (typeof response === "string") {
+                    response = JSON.parse(response);
+                }
+
+                if (response.status) {
+                    showToast(response.message || "Review submitted successfully!", "success");
+
+                    // RESET
+                    $('#reviewModal input, #reviewModal textarea').val('');
+                    $('#ratingValue').val(0);
+                    $('.star-rating i').removeClass('active');
+
+                    // CLOSE MODAL
+                    let bsModal = bootstrap.Modal.getInstance(modal);
+                    bsModal.hide();
+
+                } else {
+                    showToast(response.message || "Something failed", "error");
+                }
+            },
+
+            error: function() {
+                showToast("Server error. Please try again.", "error");
+            },
+
+            complete: function() {
+                hideLoader();
+            }
+        });
+
+    });
+
+});

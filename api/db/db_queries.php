@@ -431,6 +431,8 @@ LEFT JOIN mehendi_package_images AS mpi
 LEFT JOIN user_reviews AS ur
     ON mep.user_id = ur.user_id
     AND mep.user_uniq_id = ur.user_unique_id
+    AND mep.id = ur.package_id
+    AND ur.event_type = 'MEHENDI'
 
 WHERE mep.id = :id
 AND mep.is_approved = :is_approved
@@ -576,6 +578,8 @@ LEFT JOIN makeup_package_images AS mpi
 LEFT JOIN user_reviews AS ur
     ON mep.user_id = ur.user_id
     AND mep.user_uniq_id = ur.user_unique_id
+    AND mep.id = ur.package_id
+    AND ur.event_type = 'MAKEUP'
 
 WHERE mep.id = :id
 AND mep.is_approved = :is_approved

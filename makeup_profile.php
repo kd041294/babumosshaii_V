@@ -5,6 +5,25 @@ $profileId = decryptData($_GET['id']) ?? null;
 $result = getMakeupPackageDetailsById($profileId, 1, 1);
 $pkg = $result['data'] ?? null;
 
+$artist_id = $pkg['_user_id'] ?? null;
+$artist_uniq_id = $pkg['_user_uniq_id'] ?? null;
+
+if ($artist_id && $artist_uniq_id) {
+    $artistGalleryResults = getArtistGalleryImages($artist_id, $artist_uniq_id);
+    $galleryImages = [];
+    $galleryVideos = [];
+
+    if (!empty($artistGalleryResults['data'])) {
+        foreach ($artistGalleryResults['data'] as $g) {
+            if ($g['_media_type'] === 'image') {
+                $galleryImages[] = $g;
+            } elseif ($g['_media_type'] === 'video') {
+                $galleryVideos[] = $g;
+            }
+        }
+    }
+}
+
 $images = !empty($pkg['_image_urls']) ? explode('||', $pkg['_image_urls']) : [];
 $reviews = [];
 
@@ -83,7 +102,6 @@ $service_type = 'MAKEUP';
     /* ============================= */
     .details-section {
         padding: 25px;
-        background: #fff;
     }
 
     .title {
@@ -375,6 +393,108 @@ $service_type = 'MAKEUP';
             height: 240px;
         }
     }
+
+    /* WRAPPER */
+    .details-section {
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+    }
+
+    /* BACKGROUND IMAGE LAYER */
+    /* SOFT GRADIENT + IMAGE */
+    .details-section::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+
+        background: url('./assets/images/artist_images/mehendi_background.png');
+        background-size: contain;
+        /* important change */
+        background-repeat: repeat;
+        /* makes pattern visible */
+        background-position: center;
+
+        opacity: 0.2;
+        /* increase visibility */
+        z-index: -1;
+        height: 100%;
+    }
+
+    /* MODAL DESIGN */
+    .review-modal {
+        border-radius: 18px;
+        padding: 10px;
+    }
+
+    /* STAR RATING */
+    .star-rating i {
+        font-size: 26px;
+        cursor: pointer;
+        color: #ddd;
+        transition: 0.3s;
+    }
+
+    .star-rating i.active {
+        color: #ffc107;
+        transform: scale(1.1);
+    }
+
+    /* TEXTAREA */
+    .review-modal textarea {
+        border-radius: 10px;
+        resize: none;
+    }
+
+    /* INPUT STYLE */
+    .review-modal input,
+    .review-modal textarea {
+        border-radius: 10px;
+        border: 1px solid #eee;
+        font-size: 14px;
+    }
+
+    .review-modal input:focus,
+    .review-modal textarea:focus {
+        border-color: #f99583;
+        box-shadow: 0 0 0 2px rgba(249, 149, 131, 0.15);
+    }
+
+    .gallery-card {
+        width: 100%;
+        height: 220px;
+        /* fixed box */
+        border-radius: 12px;
+        background: #f8f8f8;
+        /* light bg for empty space */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    /* ✅ IMAGE FULL FIT */
+    .gallery-img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        /* 🔥 KEY FIX */
+    }
+
+    /* ✅ VIDEO FULL FIT */
+    .gallery-video {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        /* 🔥 KEY FIX */
+    }
+
+    /* MOBILE */
+    @media(max-width:768px) {
+        .gallery-card {
+            height: 160px;
+        }
+    }
 </style>
 
 <?= require 'navbar.php'; ?>
@@ -630,9 +750,25 @@ $service_type = 'MAKEUP';
 
                 <!-- RIGHT: REVIEWS -->
                 <div class="col-md-8">
-
                     <?php if (!empty($reviews)) { ?>
+                        <div class="row justify-content-end">
+                            <div class="row justify-content-end">
+                                <button class="btn btn-danger btn-sm w-25"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#reviewModal"
 
+                                    data-package-id="<?= htmlspecialchars($pkg['_id']) ?>"
+                                    data-artist-id="<?= htmlspecialchars($pkg['_user_id']) ?>"
+                                    data-artist-uniq-id="<?= htmlspecialchars($pkg['_user_uniq_id']) ?>"
+
+                                    data-package-name="<?= htmlspecialchars($pkg['_package_title']) ?>"
+                                    data-artist-name="<?= htmlspecialchars($pkg['_company_name']) ?>">
+
+                                    <i class="bi bi-pencil-square me-1"></i>
+                                    Write a Review
+                                </button>
+                            </div>
+                        </div>
                         <?php foreach ($reviews as $r) { ?>
 
                             <div class="review-card-new">
@@ -684,34 +820,122 @@ $service_type = 'MAKEUP';
                             <p class="text-success small mb-3">
                                 ⭐ Your review helps others choose better
                             </p>
+                            <button class="btn btn-danger btn-sm"
+                                data-bs-toggle="modal"
+                                data-bs-target="#reviewModal"
 
-                            <?php if (empty($_SESSION['user_id'])) { ?>
+                                data-package-id="<?= htmlspecialchars($pkg['_id']) ?>"
+                                data-artist-id="<?= htmlspecialchars($pkg['_user_id']) ?>"
+                                data-artist-uniq-id="<?= htmlspecialchars($pkg['_user_uniq_id']) ?>"
 
-                                <!-- NOT LOGGED IN -->
-                                <button class="btn btn-outline-danger btn-sm"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#loginModal">
-                                    <i class="bi bi-box-arrow-in-right me-1"></i>
-                                    Login to Write Review
-                                </button>
+                                data-package-name="<?= htmlspecialchars($pkg['_package_title']) ?>"
+                                data-artist-name="<?= htmlspecialchars($pkg['_company_name']) ?>">
 
-                            <?php } else { ?>
-
-                                <!-- LOGGED IN -->
-                                <button class="btn btn-danger btn-sm"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#reviewModal">
-                                    <i class="bi bi-pencil-square me-1"></i>
-                                    Write a Review
-                                </button>
-
-                            <?php } ?>
+                                <i class="bi bi-pencil-square me-1"></i>
+                                Write a Review
+                            </button>
 
                         </div>
 
                     <?php } ?>
 
                 </div>
+            </div>
+
+        </div>
+
+        <!-- GALLERY -->
+        <div class="mt-5">
+
+            <h4 class="mb-3 text-light">Gallery</h4>
+
+            <!-- TABS -->
+            <ul class="nav nav-pills mb-3 custom-tabs" role="tablist">
+                <li class="nav-item">
+                    <button class="nav-link active"
+                        data-bs-toggle="pill"
+                        data-bs-target="#galleryImagesTab">
+                        📸 Images
+                    </button>
+                </li>
+
+                <li class="nav-item">
+                    <button class="nav-link"
+                        data-bs-toggle="pill"
+                        data-bs-target="#galleryVideosTab">
+                        🎥 Videos
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+
+                <!-- ================= IMAGES ================= -->
+                <div class="tab-pane fade show active" id="galleryImagesTab">
+
+                    <?php if (!empty($galleryImages)) { ?>
+
+                        <div class="row g-3">
+
+                            <?php foreach ($galleryImages as $img) { ?>
+
+                                <div class="col-6 col-md-3 col-lg-2">
+                                    <div class="gallery-card">
+
+                                        <img src="<?= htmlspecialchars($img['_media_url']) ?>" class="gallery-img">
+
+                                    </div>
+                                </div>
+
+                            <?php } ?>
+
+                        </div>
+
+                    <?php } else { ?>
+
+                        <div class="text-center p-4 no-review-box">
+                            <i class="bi bi-image fs-1 text-muted"></i>
+                            <p class="text-muted mt-2 mb-0">No images available</p>
+                        </div>
+
+                    <?php } ?>
+
+                </div>
+
+                <!-- ================= VIDEOS ================= -->
+                <div class="tab-pane fade" id="galleryVideosTab">
+
+                    <?php if (!empty($galleryVideos)) { ?>
+
+                        <div class="row g-3">
+
+                            <?php foreach ($galleryVideos as $vid) { ?>
+
+                                <div class="col-6 col-md-3 col-lg-2">
+                                    <div class="gallery-card">
+
+                                        <video controls preload="metadata" class="gallery-video">
+                                            <source src="<?= htmlspecialchars($vid['_media_url']) ?>" type="video/mp4">
+                                        </video>
+
+                                    </div>
+                                </div>
+
+                            <?php } ?>
+
+                        </div>
+
+                    <?php } else { ?>
+
+                        <div class="text-center p-4 no-review-box">
+                            <i class="bi bi-camera-video fs-1 text-muted"></i>
+                            <p class="text-muted mt-2 mb-0">No videos available</p>
+                        </div>
+
+                    <?php } ?>
+
+                </div>
+
             </div>
 
         </div>
@@ -727,6 +951,11 @@ $service_type = 'MAKEUP';
 </div>
 <?php require './bootstrap_modals/send_artist_inquiry_form_modal.php'; ?>
 <?php require './bootstrap_modals/toaster_modal.php'; ?>
+<?php require './bootstrap_modals/artist_review_modal.php'; ?>
+
+<div id="pageLoader" class="loader-overlay">
+    <div class="loader-spinner"></div>
+</div>
 <!-- Footer -->
 <?php require 'footer.php'; ?>
 
@@ -743,9 +972,6 @@ $service_type = 'MAKEUP';
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/common.js"></script>
 <script src="assets/js/artist_profile.js"></script>
-<div id="pageLoader" class="loader-overlay">
-    <div class="loader-spinner"></div>
-</div>
 </body>
 
 </html>

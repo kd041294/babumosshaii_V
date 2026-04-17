@@ -45,3 +45,26 @@ if ($isLocal) {
         ]
     ];
 }
+
+function generateReviewId($conn) {
+
+    // Get last inserted review ID
+    $query = "SELECT review_id FROM user_reviews 
+              ORDER BY id DESC LIMIT 1";
+
+    $stmt = $conn->prepare($query);
+    $stmt->execute();
+
+    $lastId = $stmt->fetchColumn();
+
+    if ($lastId) {
+        // Extract number (e.g. REV10000008 → 10000008)
+        $num = (int) str_replace('REV', '', $lastId);
+        $num++;
+    } else {
+        // First entry
+        $num = 10000001;
+    }
+
+    return 'REV' . $num;
+}
