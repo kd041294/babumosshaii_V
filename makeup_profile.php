@@ -20,6 +20,25 @@ if (!empty($pkg['_reviews_json'])) {
         }
     }
 }
+
+$ratingCounts = [
+    5 => 0,
+    4 => 0,
+    3 => 0,
+    2 => 0,
+    1 => 0,
+];
+
+foreach ($reviews as $r) {
+    $rating = (int)($r['rating'] ?? 0);
+
+    if ($rating >= 1 && $rating <= 5) {
+        $ratingCounts[$rating]++;
+    }
+}
+
+$totalReviews = count($reviews);
+
 $service_type = 'MAKEUP';
 ?>
 <title>
@@ -33,15 +52,19 @@ $service_type = 'MAKEUP';
     content="Makeup packages Kolkata, best makeup artists Kolkata, wedding makeup services Kolkata, makeup design packages Kolkata, makeup artist booking Kolkata">
 
 <style>
-    /* MAIN CONTAINER */
+    /* ============================= */
+    /* GLOBAL CONTAINER */
+    /* ============================= */
     .profile-container {
         background: #fff;
-        border-radius: 20px;
+        border-radius: 18px;
         overflow: hidden;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
     }
 
-    /* CAROUSEL IMAGE */
+    /* ============================= */
+    /* IMAGE CAROUSEL */
+    /* ============================= */
     .carousel-img {
         width: 100%;
         height: 100%;
@@ -49,39 +72,50 @@ $service_type = 'MAKEUP';
         object-fit: cover;
     }
 
-    /* DETAILS */
-    .details-section {
-        padding: 30px;
-        background: #ebc0d8;
+    @media(max-width:768px) {
+        .carousel-img {
+            min-height: 240px;
+        }
     }
 
-    /* TITLE */
+    /* ============================= */
+    /* DETAILS SECTION */
+    /* ============================= */
+    .details-section {
+        padding: 25px;
+        background: #fff;
+    }
+
     .title {
-        font-size: 26px;
+        font-size: 24px;
         font-weight: 700;
     }
 
-    /* COMPANY */
     .company {
-        color: #888;
         font-size: 14px;
+        color: #777;
     }
 
+    /* ============================= */
     /* PRICE */
+    /* ============================= */
     .price-box {
         background: linear-gradient(135deg, #f99583, #ff7b6b);
         color: #fff;
-        padding: 15px;
+        padding: 14px;
         border-radius: 12px;
+        margin: 15px 0;
     }
 
     .old-price {
         text-decoration: line-through;
-        display: block;
+        font-size: 13px;
         opacity: 0.8;
     }
 
+    /* ============================= */
     /* INFO GRID */
+    /* ============================= */
     .info-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -90,198 +124,256 @@ $service_type = 'MAKEUP';
 
     .info-box {
         background: #f7f7f7;
-        padding: 12px;
+        padding: 10px;
         border-radius: 10px;
-        font-size: 14px;
+        font-size: 13px;
     }
 
+    /* ============================= */
     /* BUTTON */
+    /* ============================= */
     .btn-query {
         background: linear-gradient(135deg, #f99583, #ff7b6b);
         color: #fff;
         border: none;
-        padding: 14px;
         border-radius: 30px;
+        padding: 12px;
         font-weight: 600;
         transition: 0.3s;
     }
 
     .btn-query:hover {
         transform: translateY(-2px);
-        box-shadow: 0 10px 25px rgba(249, 149, 131, 0.4);
+        box-shadow: 0 10px 20px rgba(249, 149, 131, 0.4);
+    }
+
+    /* ============================= */
+    /* TABS */
+    /* ============================= */
+    .custom-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .custom-tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .custom-tabs .nav-link {
+        border-radius: 30px;
+        padding: 8px 16px;
+        margin-right: 8px;
+        background: #abaaaa;
+        color: #dfdddd;
+        font-size: 13px;
+        border: none;
+    }
+
+    .custom-tabs .nav-link.active {
+        background: linear-gradient(135deg, #f99583, #ff7b6b);
+        color: #fff;
+    }
+
+    /* ============================= */
+    /* CONTENT CARDS */
+    /* ============================= */
+    .content-card {
+        background: #fff;
+        padding: 18px;
+        border-radius: 14px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        line-height: 1.6;
+    }
+
+    .section-heading {
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    /* ============================= */
+    /* FEATURES */
+    /* ============================= */
+    .feature-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .feature-item {
+        background: #fff5f3;
+        padding: 10px;
+        border-radius: 10px;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .feature-item i {
+        color: #ff6b5c;
+    }
+
+    /* ============================= */
+    /* REVIEW SECTION */
+    /* ============================= */
+    .review-wrapper {
+        background: #fff;
+        padding: 20px;
+        border-radius: 14px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    }
+
+    /* AVG RATING */
+    .avg-rating-box {
+        background: #fff5f3;
+        padding: 10px 16px;
+        border-radius: 10px;
+    }
+
+    .avg-score {
+        font-size: 24px;
+        font-weight: 700;
+        color: #ff5a5f;
+    }
+
+    /* STARS */
+    .stars {
+        color: #ffc107;
+        font-size: 13px;
+    }
+
+    /* ============================= */
+    /* RATING BREAKDOWN */
+    /* ============================= */
+    .rating-breakdown-card {
+        background: #fafafa;
+        padding: 12px;
+        border-radius: 10px;
+    }
+
+    .rating-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .star-label {
+        width: 30px;
+        font-size: 12px;
+    }
+
+    .progress {
+        height: 6px;
+        background: #eee;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .progress-bar {
+        background: linear-gradient(135deg, #ff7b6b, #f99583);
+    }
+
+    .count {
+        font-size: 11px;
+        width: 25px;
+        text-align: right;
+    }
+
+    /* ============================= */
+    /* REVIEW CARD */
+    /* ============================= */
+    .review-card-new {
+        background: #fff;
+        padding: 14px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .avatar {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #ff7b6b, #f99583);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+    }
+
+    .review-msg {
+        font-size: 13px;
+        color: #444;
+    }
+
+    /* ============================= */
+    /* EMPTY STATE */
+    /* ============================= */
+    .no-review-box {
+        background: #fafafa;
+        border-radius: 12px;
+        border: 1px dashed #ddd;
+    }
+
+    /* ============================= */
+    /* MOBILE OPTIMIZATION */
+    /* ============================= */
+    @media(max-width:768px) {
+
+        .title {
+            font-size: 20px;
+        }
+
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .feature-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .review-wrapper {
+            padding: 15px;
+        }
+
+        .content-card {
+            padding: 15px;
+        }
+
+        .avg-rating-box {
+            margin-top: 10px;
+        }
+
+    }
+
+    /* STOP FORCED STRETCH */
+    .profile-container {
+        align-items: flex-start !important;
+    }
+
+    /* PREVENT CAROUSEL OVER-STRETCH */
+    .carousel,
+    .carousel-inner,
+    .carousel-item {
+        height: auto !important;
+    }
+
+    /* CONTROL IMAGE HEIGHT PROPERLY */
+    .carousel-img {
+        width: 100%;
+        height: 420px;
+        /* fixed clean height */
+        object-fit: cover;
     }
 
     /* MOBILE FIX */
     @media(max-width:768px) {
         .carousel-img {
-            min-height: 250px;
+            height: 240px;
         }
-    }
-
-    /* ===== IMAGE SECTION ===== */
-    .carousel-item img {
-        height: 450px;
-        object-fit: cover;
-        border-radius: 20px 0 0 20px;
-    }
-
-    /* ===== RIGHT SIDE ===== */
-    .details-section {
-        padding: 30px;
-    }
-
-    /* TITLE */
-    .title {
-        font-size: 26px;
-        font-weight: 700;
-    }
-
-    /* COMPANY */
-    .company {
-        color: #777;
-        font-size: 14px;
-    }
-
-    /* PRICE BOX */
-    .price-box {
-        background: linear-gradient(135deg, #f99583, #ff7b6b);
-        color: #fff;
-        padding: 15px;
-        border-radius: 15px;
-        margin: 20px 0;
-    }
-
-    .price-box h3 {
-        margin: 0;
-        font-weight: 700;
-    }
-
-    /* INFO GRID */
-    .info-box {
-        background: #f9f9f9;
-        border-radius: 12px;
-        padding: 10px 15px;
-        margin-bottom: 10px;
-    }
-
-    /* SECTION TITLE */
-    .section-title {
-        font-weight: 600;
-        margin-top: 20px;
-        margin-bottom: 8px;
-    }
-
-    /* BUTTON */
-    .btn-query {
-        background: linear-gradient(135deg, #f99583, #ff7b6b);
-        color: #fff;
-        border: none;
-        border-radius: 30px;
-        padding: 12px;
-        width: 100%;
-        font-size: 16px;
-        font-weight: 600;
-        transition: 0.3s;
-    }
-
-    .btn-query:hover {
-        transform: scale(1.03);
-        box-shadow: 0 10px 20px rgba(249, 149, 131, 0.4);
-    }
-
-    /* FLOATING CTA */
-    .sticky-box {
-        position: sticky;
-        top: 100px;
-    }
-
-    /* MOBILE */
-    @media(max-width:768px) {
-        .carousel-item img {
-            border-radius: 20px 20px 0 0;
-            height: 250px;
-        }
-    }
-
-    .content-box {
-        background: #ebc0d8;
-        border-radius: 10px;
-        line-height: 1.6;
-        padding: 2%;
-    }
-
-    .content-box p {
-        margin-bottom: 10px;
-    }
-
-    .review-card {
-        background-color: #ebc0d8;
-        padding: 1%;
-        margin: 1%;
-        border-radius: 10px;
-    }
-
-    .booking-modal {
-        border-radius: 20px;
-        overflow: hidden;
-    }
-
-    /* HEADER */
-    .modal-header {
-        background: linear-gradient(135deg, #f99583, #ff7b6b);
-        color: #fff;
-    }
-
-    /* PACKAGE CARD */
-    .package-card {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: #fff3f0;
-        padding: 15px;
-        border-radius: 12px;
-    }
-
-    .price-tag {
-        background: #ff7b6b;
-        color: #fff;
-        padding: 8px 15px;
-        border-radius: 20px;
-        font-weight: 600;
-    }
-
-    /* FORM SECTION */
-    .form-section {
-        background: #fafafa;
-        padding: 15px;
-        border-radius: 12px;
-        margin-bottom: 15px;
-    }
-
-    .form-section h6 {
-        font-weight: 600;
-        margin-bottom: 10px;
-    }
-
-    /* INPUT */
-    .form-control {
-        border-radius: 10px;
-        font-size: 14px;
-    }
-
-    /* BUTTON */
-    .btn-query {
-        background: linear-gradient(135deg, #f99583, #ff7b6b);
-        color: #fff;
-        border-radius: 30px;
-        padding: 12px;
-        font-weight: 600;
-        transition: 0.3s;
-    }
-
-    .btn-query:hover {
-        transform: scale(1.03);
-        box-shadow: 0 10px 20px rgba(249, 149, 131, 0.4);
     }
 </style>
 
@@ -383,89 +475,244 @@ $service_type = 'MAKEUP';
         </div>
 
         <!-- LOWER CONTENT -->
-        <div class="mt-4 p-4 profile-container">
+        <div class="mt-5 modern-section">
 
-            <!-- DESCRIPTION -->
-            <div class="section-title d-flex align-items-center">
-                <i class="bi bi-card-text me-2 text-danger"></i>
-                Description
-            </div>
-            <div class="content-box p-3 mb-3">
-                <?= safeHtml($pkg['_description']) ?>
-            </div>
+            <!-- TABS -->
+            <ul class="nav nav-pills mb-4 custom-tabs" id="packageTab" role="tablist">
 
-            <!-- FEATURES -->
-            <div class="section-title d-flex align-items-center">
-                <i class="bi bi-stars me-2 text-warning"></i>
-                Features
-            </div>
-            <div class="content-box p-3 mb-3">
-                <ul class="feature-list">
-                    <?php
-                    $features = explode(',', $pkg['_features']);
-                    foreach ($features as $feature) {
-                        $feature = trim($feature);
-                        if (!empty($feature)) {
-                            echo '<li><i class="bi bi-check-circle-fill text-success me-2"></i>'
-                                . htmlspecialchars($feature) . '</li>';
-                        }
-                    }
-                    ?>
-                </ul>
-            </div>
+                <li class="nav-item">
+                    <button class="nav-link active text-dark" data-bs-toggle="pill" data-bs-target="#desc">
+                        <i class="bi bi-card-text me-1"></i> Description
+                    </button>
+                </li>
 
-            <!-- PACKAGE INCLUDES -->
-            <div class="section-title d-flex align-items-center">
-                <i class="bi bi-gift-fill me-2 text-primary"></i>
-                Package Includes
-            </div>
-            <div class="content-box p-3">
-                <?= safeHtml($pkg['_package_includes']) ?>
+                <li class="nav-item">
+                    <button class="nav-link text-dark" data-bs-toggle="pill" data-bs-target="#features">
+                        <i class="bi bi-stars me-1"></i> Features
+                    </button>
+                </li>
+
+                <li class="nav-item">
+                    <button class="nav-link text-dark" data-bs-toggle="pill" data-bs-target="#includes">
+                        <i class="bi bi-gift me-1"></i> Includes
+                    </button>
+                </li>
+
+            </ul>
+
+            <!-- TAB CONTENT -->
+            <div class="tab-content">
+
+                <!-- DESCRIPTION -->
+                <div class="tab-pane fade show active" id="desc">
+                    <div class="content-card highlight-card">
+
+                        <h6 class="section-heading">
+                            <i class="bi bi-card-text me-2"></i> About This Package
+                        </h6>
+
+                        <div class="content-text">
+                            <?= safeHtml($pkg['_description']) ?>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- FEATURES -->
+                <div class="tab-pane fade" id="features">
+                    <div class="content-card">
+
+                        <h6 class="section-heading">
+                            <i class="bi bi-stars me-2"></i> Key Highlights
+                        </h6>
+
+                        <div class="feature-grid">
+                            <?php
+                            $features = explode(',', $pkg['_features']);
+                            foreach ($features as $feature) {
+                                $feature = trim($feature);
+                                if (!empty($feature)) {
+                                    echo '
+                        <div class="feature-item">
+                            <div class="icon-box">
+                                <i class="bi bi-check-lg"></i>
+                            </div>
+                            <span>' . htmlspecialchars($feature) . '</span>
+                        </div>';
+                                }
+                            }
+                            ?>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- INCLUDES -->
+                <div class="tab-pane fade" id="includes">
+                    <div class="content-card">
+
+                        <h6 class="section-heading">
+                            <i class="bi bi-gift me-2"></i> What You Get
+                        </h6>
+
+                        <div class="include-list">
+                            <?= safeHtml($pkg['_package_includes']) ?>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
 
         </div>
 
         <!-- ⭐ RATINGS & REVIEWS -->
-        <div class="mt-4 p-4 profile-container">
+        <div class="mt-5 review-wrapper">
 
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h4 class="mb-0">⭐ Ratings & Reviews</h4>
+            <!-- HEADER -->
+            <div class="review-header d-flex justify-content-between align-items-center flex-wrap">
 
-                <div class="rating-summary">
-                    <span class="rating-number"><?= $pkg['_avg_rating'] ?? '0' ?></span>
-                    <span class="text-muted">(<?= $pkg['_total_reviews'] ?? 0 ?> reviews)</span>
+                <div>
+                    <h4 class="mb-1">Ratings & Reviews</h4>
+                    <small class="text-muted">
+                        <?= $pkg['_total_reviews'] ?? 0 ?> verified reviews
+                    </small>
                 </div>
+
+                <!-- AVG RATING -->
+                <div class="avg-rating-box text-center">
+                    <div class="avg-score"><?= number_format($pkg['_avg_rating'] ?? 0, 1) ?></div>
+                    <div class="stars">
+                        <?= str_repeat('★', round($pkg['_avg_rating'] ?? 0)) ?>
+                    </div>
+                </div>
+
             </div>
 
-            <?php if (count($reviews) > 0) { ?>
+            <!-- BODY -->
+            <div class="row mt-4">
 
-                <div class="review-list">
+                <!-- LEFT: RATING BREAKDOWN (STATIC UI for now) -->
+                <div class="col-md-4">
 
-                    <?php foreach ($reviews as $r) { ?>
+                    <div class="rating-breakdown-card">
 
-                        <div class="review-card">
+                        <?php foreach ($ratingCounts as $star => $count) {
 
-                            <div class="d-flex justify-content-between">
-                                <strong><?= htmlspecialchars($r['name']) ?></strong>
+                            $percent = $totalReviews > 0
+                                ? ($count / $totalReviews) * 100
+                                : 0;
+                        ?>
 
-                                <div class="stars">
-                                    <?= str_repeat('⭐', (int)$r['rating']) ?>
+                            <div class="rating-row">
+
+                                <div class="star-label">
+                                    <?= $star ?> <i class="bi bi-star-fill"></i>
                                 </div>
+
+                                <div class="progress flex-grow-1">
+                                    <div class="progress-bar"
+                                        style="width: <?= $percent ?>%">
+                                    </div>
+                                </div>
+
+                                <div class="count">
+                                    <?= $count ?>
+                                </div>
+
                             </div>
 
-                            <p class="review-msg mt-2">
-                                <?= htmlspecialchars($r['msg']) ?>
+                        <?php } ?>
+
+                    </div>
+
+                </div>
+
+                <!-- RIGHT: REVIEWS -->
+                <div class="col-md-8">
+
+                    <?php if (!empty($reviews)) { ?>
+
+                        <?php foreach ($reviews as $r) { ?>
+
+                            <div class="review-card-new">
+
+                                <div class="d-flex justify-content-between align-items-center">
+
+                                    <!-- USER INFO -->
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="avatar">
+                                            <?= strtoupper(substr($r['name'], 0, 1)) ?>
+                                        </div>
+                                        <div>
+                                            <strong><?= htmlspecialchars($r['name']) ?></strong>
+                                            <div class="small text-muted">
+                                                Verified Customer
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- STARS -->
+                                    <div class="stars">
+                                        <?= str_repeat('★', (int)$r['rating']) ?>
+                                    </div>
+
+                                </div>
+
+                                <!-- MESSAGE -->
+                                <p class="review-msg mt-2 mb-0">
+                                    <?= htmlspecialchars($r['msg']) ?>
+                                </p>
+
+                            </div>
+
+                        <?php } ?>
+
+                    <?php } else { ?>
+
+                        <!-- 🔥 EMPTY STATE -->
+                        <div class="no-review-box text-center p-4">
+
+                            <i class="bi bi-chat-square-text fs-1 text-muted mb-2"></i>
+
+                            <h6 class="mb-1">No reviews yet</h6>
+
+                            <p class="text-muted small mb-2">
+                                Be the first to share your experience!
                             </p>
+
+                            <p class="text-success small mb-3">
+                                ⭐ Your review helps others choose better
+                            </p>
+
+                            <?php if (empty($_SESSION['user_id'])) { ?>
+
+                                <!-- NOT LOGGED IN -->
+                                <button class="btn btn-outline-danger btn-sm"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#loginModal">
+                                    <i class="bi bi-box-arrow-in-right me-1"></i>
+                                    Login to Write Review
+                                </button>
+
+                            <?php } else { ?>
+
+                                <!-- LOGGED IN -->
+                                <button class="btn btn-danger btn-sm"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#reviewModal">
+                                    <i class="bi bi-pencil-square me-1"></i>
+                                    Write a Review
+                                </button>
+
+                            <?php } ?>
 
                         </div>
 
                     <?php } ?>
 
                 </div>
-
-            <?php } else { ?>
-                <p class="text-muted">No reviews yet</p>
-            <?php } ?>
+            </div>
 
         </div>
 
@@ -500,4 +747,5 @@ $service_type = 'MAKEUP';
     <div class="loader-spinner"></div>
 </div>
 </body>
+
 </html>
