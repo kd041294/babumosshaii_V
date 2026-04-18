@@ -50,25 +50,6 @@ try {
     // ✅ DB Connection
     $conn = getDBConnection('db_artist');
 
-    // ✅ Duplicate check
-    $checkQuery = "SELECT id FROM user_reviews 
-                   WHERE package_id = :package_id
-                   LIMIT 1";
-
-    $checkStmt = $conn->prepare($checkQuery);
-
-    $checkStmt->execute([
-        ':package_id' => $package_id
-    ]);
-
-    if ($checkStmt->rowCount() > 0) {
-        echo json_encode([
-            "status" => "duplicate",
-            "message" => "You have already submitted a review for this package"
-        ]);
-        exit;
-    }
-
     $reviewCode = generateReviewId($conn);
 
     // ✅ FIXED INSERT QUERY

@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const name = $('#userName').val().trim();
         const email = $('#userEmail').val().trim();
-        const date = $('#eventDate').val();
+        const date = $('#eventDateRev').val();
         const rating = $('#ratingValue').val();
         const message = $('#reviewMessage').val().trim();
 

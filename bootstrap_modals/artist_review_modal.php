@@ -3,10 +3,10 @@
         <div class="modal-content review-modal">
 
             <!-- HEADER -->
-            <div class="modal-header border-0 pb-0">
+            <!-- <div class="modal-header border-0 pb-2 bg-secondary text-white rounded ">
                 <h5 class="modal-title fw-bold">Write Your Review</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
+            </div> -->
 
             <!-- BODY -->
             <div class="modal-body">
@@ -15,7 +15,7 @@
                 <input type="hidden" id="artistUniqId">
                 <input type="hidden" id="serviceType" value="<?php echo $service_type; ?>">
                 <!-- PACKAGE + ARTIST -->
-                <div class="mb-3 small text-muted">
+                <div class="mb-3 small bg-danger text-white p-2 rounded">
                     <div><strong>Package:</strong> <span id="modalPackage"></span></div>
                     <div><strong>Artist:</strong> <span id="modalArtist"></span></div>
                 </div>
@@ -32,12 +32,12 @@
 
                 <!-- EVENT TYPE (READONLY) -->
                 <div class="mb-3">
-                    <input type="text" class="form-control bg-light" value="<?= $service_type = 'MAKEUP' ? 'Make Up' : 'Mehendi' ?>" readonly>
+                    <input style="background-color: #e2e0e0;" type="text" class="form-control" value="<?= $service_type = 'MAKEUP' ? 'Make Up' : 'Mehendi' ?>" readonly>
                 </div>
 
                 <!-- EVENT DATE -->
                 <div class="mb-3">
-                    <input type="date" class="form-control" id="eventDate">
+                    <input type="date" class="form-control" id="eventDateRev" min="2000-01-01" />
                 </div>
 
                 <!-- STAR RATING -->
@@ -61,8 +61,10 @@
 
             <!-- FOOTER -->
             <div class="modal-footer border-0">
-                <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                <button class="btn btn-danger">Submit Review</button>
+                <button class="btn btn-light border border-dark" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i> Cancel
+                </button>
+                <button class="btn btn-danger"><i class="bi bi-check-circle"></i> Submit Review</button>
             </div>
 
         </div>
