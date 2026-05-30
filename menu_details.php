@@ -531,7 +531,7 @@ $menu = $menuResponse['status'] ? $menuResponse['data'] : null;
 
                                     <div>
                                         <div class="fw-bold fs-5">
-                                            Wedding Package
+                                            Menu Package
                                         </div>
 
                                         <small>
