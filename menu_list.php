@@ -234,7 +234,7 @@ $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
   <div class="container my-2">
     <div class="notice-bar">
       <div class="notice-text">
-        🍽️ All menus include breakfast and lunch for 50 guests. For additional guests beyond 50, a charge of ₹225 per head will apply. The minimum requirement for any event is 250 guests.
+        🍽️ All menus include breakfast and lunch for 30 guests. For additional guests beyond 30, a charge of ₹225 per head will apply. The minimum requirement for any event is 250 guests.
       </div>
 
     </div>

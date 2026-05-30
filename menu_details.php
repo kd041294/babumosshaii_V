@@ -439,9 +439,9 @@ $menu = $menuResponse['status'] ? $menuResponse['data'] : null;
 
         <!-- Back -->
         <div class="mb-2 d-flex justify-content-between align-items-center">
-            <button onclick="history.back()" class="btn btn-outline-dark btn-sm back-btn text-dark back-button">
+            <a href="<?= BASE_URL.'menu_list.php' ?>" class="btn btn-outline-dark btn-sm back-btn text-dark back-button">
                 <i class="bi bi-arrow-left"></i> Back
-            </button>
+            </a>
 
             <?php if ($menu): ?>
                 <button class="btn btn-danger btn-sm share-btn"
