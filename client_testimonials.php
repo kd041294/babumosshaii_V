@@ -74,7 +74,7 @@ $mediaRes = getEventReviewMedias();
 
 <body>
 
-    <?= require 'navbar.php'; ?>
+    <?php require 'navbar.php'; ?>
     <?php require 'quick_connect.php'; ?>
 
     <div class="container">

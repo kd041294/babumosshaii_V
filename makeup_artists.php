@@ -240,7 +240,7 @@ $packages = ($resultMakeup['status'] && !empty($resultMakeup['data']))
 
 <body>
 
-    <?= require 'navbar.php'; ?>
+    <?php require 'navbar.php'; ?>
 
     <!-- ===== HERO ===== -->
     <section class="hero-section">

@@ -9,229 +9,568 @@ $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
 <meta name="keywords"
   content="BabuMosshaii catering Kolkata, Bengali catering Kolkata, wedding catering Kolkata, best caterers in Kolkata, corporate catering Kolkata">
 <style>
-  /* Card Container */
-  .menu-grid-card {
-    border-radius: 20px;
-    background: linear-gradient(180deg, #fffaf5, #fff1e8);
-    transition: all 0.35s ease;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #ffe0cc;
-    height: 100%;
+  :root {
+    --primary: #B8183E;
+    --primary-light: #D6335C;
+
+    --bg: #14090B;
+    --card: #1E1114;
+    --card-hover: #281418;
+
+    --text: #F8F8F8;
+    --muted: #C8C8C8;
+
+    --gold: #F6C453;
+    --gold-light: #FFE4A3;
+
+    --border: rgba(255, 255, 255, .08);
+
+    --shadow: 0 18px 45px rgba(0, 0, 0, .45);
   }
 
-  /* Hover Effect */
-  @media (hover: hover) {
-    .menu-grid-card:hover {
-      transform: translateY(-8px) scale(1.01);
-      box-shadow: 0 18px 40px rgba(255, 94, 98, 0.25);
-    }
+  /*=========================================
+    GOOGLE FONT
+  ==========================================*/
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background:
+      radial-gradient(circle at top left,
+        rgba(184, 24, 62, .15),
+        transparent 35%),
+      radial-gradient(circle at bottom right,
+        rgba(246, 196, 83, .08),
+        transparent 35%),
+      linear-gradient(135deg, #14090B, #1B0D11, #0F0A0B);
+
+    color: var(--text);
   }
 
-  /* Header */
-  .menu-grid-header {
-    background: linear-gradient(90deg, #ff512f, #f09819);
-    color: #fff;
-    padding: 14px 16px;
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: 0.4px;
-    border-radius: 20px 20px 0 0;
-    flex-shrink: 0;
-  }
-
-  /* Status Badge */
-  .menu-grid-header .badge {
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 4px 8px;
-    border-radius: 999px;
-  }
-
-  /* SCROLLABLE CONTENT */
-  .menu-content {
-    flex: 1;
-    overflow-y: auto;
-    padding-bottom: 6px;
-  }
-
-  /* Scrollbar */
-  .menu-content::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  .menu-content::-webkit-scrollbar-thumb {
-    background: #fca5a5;
-    border-radius: 4px;
-  }
-
-  /* Menu Sections */
-  .menu-grid-section {
-    padding: 10px 16px 0;
-  }
-
-  /* Section Title */
-  .menu-grid-title {
-    font-size: 0.8rem;
-    font-weight: 800;
-    color: #c2410c;
-    text-transform: uppercase;
-    border-bottom: 1px dashed #f5b089;
-    margin-bottom: 6px;
-  }
-
-  /* Items */
-  .menu-grid-list {
-    font-size: 0.82rem;
-    padding-left: 18px;
-    margin-bottom: 8px;
-    color: #444;
-    line-height: 1.5;
-  }
-
-  /* Footer */
-  .menu-grid-footer {
-    background: linear-gradient(90deg, #fff7ed, #ffedd5);
-    border-top: 1px dashed #f4c6a3;
-    padding: 12px 16px;
-    font-size: 0.8rem;
-    flex-shrink: 0;
-  }
-
-  /* Total Heads */
-  .menu-grid-footer .text-danger {
-    color: #9f1239 !important;
-    font-weight: 700;
-  }
-
-  /* Price */
-  .original-price {
-    color: #656668ff;
-    text-decoration: line-through;
-    font-size: 0.9rem;
-    font-weight: bold
-  }
-
-  .final-price {
-    color: #b11226;
-    font-size: 1.25rem;
-    font-weight: 800;
-  }
-
-  .discount-badge {
-    background: linear-gradient(90deg, #16a34a, #22c55e);
-    color: #fff;
-    font-size: 0.72rem;
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 999px;
-  }
-
-  .menu-grid-card {
-    position: relative;
-  }
-
-  /* Watermark Logo */
-  .menu-grid-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url("assets/images/logo.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 65%;
-    opacity: 0.06;
-    /* watermark softness */
-    pointer-events: none;
-    /* click-through */
-    z-index: 0;
-  }
-
-  .menu-grid-card>* {
-    position: relative;
-    z-index: 1;
-  }
-
-
-  /* Mobile */
-  @media (max-width: 576px) {
-    .menu-content {
-      max-height: 260px;
-    }
-  }
+  /*=========================================
+  HERO NOTICE
+  ==========================================*/
 
   .notice-bar {
-    width: 100%;
-    background: linear-gradient(90deg, #e6d131, #ecdfb9);
-    color: #181010;
-    padding: 10px 0;
+    background: linear-gradient(90deg,
+        #3A151B,
+        #261012);
+    border-left: 5px solid var(--gold);
+    color: #FFF;
+    border-radius: 18px;
+    padding: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+    margin-bottom: 30px;
     overflow: hidden;
-    position: relative;
-    border-radius: 10px;
-    margin-bottom: 12px;
-    box-shadow: 0 6px 16px rgba(255, 81, 47, 0.35);
   }
 
   .notice-text {
+    color: #FFF;
+    font-size: 15px;
+    font-weight: 600;
     white-space: nowrap;
     display: inline-block;
     padding-left: 100%;
-    font-size: 0.95rem;
-    font-weight: 600;
-    animation: scrollNotice 30s linear infinite;
+    animation: marquee 22s linear infinite;
   }
 
-  /* Smooth scrolling animation */
-  @keyframes scrollNotice {
-    0% {
+  @keyframes marquee {
+
+    from {
       transform: translateX(0);
     }
 
-    100% {
+    to {
       transform: translateX(-100%);
     }
+
   }
 
-  /* Mobile tuning */
-  @media (max-width: 576px) {
-    .notice-text {
-      font-size: 0.85rem;
-      animation-duration: 10s;
-    }
+  /*=========================================
+ CARD
+==========================================*/
+
+  .menu-grid-card {
+
+    background: linear-gradient(180deg,
+        #241215,
+        #1B1012);
+
+    border: 1px solid var(--border);
+
+    border-radius: 22px;
+
+    box-shadow: var(--shadow);
+
+    transition: .35s;
+
   }
 
-  /* Share Button */
-  .share-btn {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border: none;
-    background: rgba(255, 255, 255, 0.2);
+  .menu-grid-card:hover {
+
+    transform: translateY(-8px);
+
+    border-color: rgba(246, 196, 83, .4);
+
+    box-shadow:
+      0 25px 60px rgba(0, 0, 0, .55);
+
+  }
+
+  /*=========================================
+ WATERMARK
+==========================================*/
+
+  .menu-grid-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background: url("assets/images/logo.png") center center no-repeat;
+
+    background-size: 65%;
+
+    opacity: .04;
+
+    pointer-events: none;
+
+  }
+
+  .menu-grid-card>* {
+
+    position: relative;
+
+    z-index: 2;
+
+  }
+
+  /*=========================================
+  HEADER
+  ==========================================*/
+
+  .menu-grid-header {
+    background: linear-gradient(135deg,
+        #B8183E,
+        #82102B);
+
     color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.25s ease;
-    backdrop-filter: blur(6px);
+
+    padding: 18px;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+  }
+
+  .menu-grid-header span {
+
+    letter-spacing: .5px;
+
+  }
+
+  /*=========================================
+ BADGE
+==========================================*/
+
+  .menu-grid-header .badge {
+
+    background: rgba(255, 255, 255, .25) !important;
+
+    backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255, 255, 255, .3);
+
+    color: #fff;
+
+    font-size: 11px;
+
+    padding: 6px 10px;
+
+    border-radius: 50px;
+
+  }
+
+  /*=========================================
+  SHARE BUTTON
+  ==========================================*/
+
+  .share-btn {
+
+    width: 38px;
+
+    height: 38px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, .08);
+
+    color: white;
+
+    transition: .3s;
+
   }
 
   .share-btn:hover {
-    background: #fff;
-    color: #ff512f;
-    transform: scale(1.1);
+
+    background: var(--gold);
+    color: #111;
+    transform: rotate(20deg) scale(1.12);
+
   }
 
-  .share-btn i {
-    font-size: 0.9rem;
+  /*=========================================
+  CONTENT
+  ==========================================*/
+
+  .menu-content {
+
+    max-height: 420px;
+
+    overflow-y: auto;
+
+    padding: 15px;
+
+  }
+
+  /*=========================================
+  SCROLLBAR
+  ==========================================*/
+
+  .menu-content::-webkit-scrollbar {
+
+    width: 6px;
+
+  }
+
+  ::-webkit-scrollbar-thumb {
+
+    background: var(--primary);
+
+    border-radius: 10px;
+
+  }
+
+  .menu-content::-webkit-scrollbar-track {
+
+    background: #f4f4f4;
+
+  }
+
+  /*=========================================
+  SECTIONS
+  ==========================================*/
+
+  .menu-grid-section {
+
+    margin-bottom: 20px;
+
+  }
+
+  .menu-grid-title {
+
+    color: var(--gold);
+
+    border-left: 4px solid var(--gold);
+
+    padding-left: 10px;
+
+    font-weight: 700;
+
+  }
+
+  /*=========================================
+  MENU LIST
+  ==========================================*/
+
+  .menu-grid-list {
+
+    list-style: none;
+
+    padding-left: 0;
+
+    margin-bottom: 0;
+
+  }
+
+  .menu-grid-list li {
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 8px 0;
+
+    color: #DDDDDD;
+
+    border-bottom: 1px dashed rgba(255, 255, 255, .08);
+
+    font-size: 14px;
+
+  }
+
+  .menu-grid-list li:last-child {
+
+    border: none;
+
+  }
+
+  .menu-grid-list li::before {
+
+    content: "✓";
+
+    width: 22px;
+
+    height: 22px;
+
+    background: #B8183E;
+
+    color: var(--gold);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    border-radius: 50%;
+
+    font-size: 11px;
+
+    margin-right: 10px;
+
+    flex-shrink: 0;
+    font-weight: bold;
+
+  }
+
+  /*=========================================
+  FOOTER
+  ==========================================*/
+
+  .menu-grid-footer {
+
+    background: #211214;
+
+    border-top: 1px solid rgba(255, 255, 255, .08);
+
+    color: #DDD;
+  padding: 3%
+  }
+
+  .menu-grid-footer small {
+
+    color: #888;
+
+  }
+
+  /*=========================================
+  HEAD COUNT
+  ==========================================*/
+
+  .text-danger {
+
+    color: #B8183E !important;
+
+    font-weight: 700;
+
+  }
+
+  /*=========================================
+  PRICE
+  ==========================================*/
+
+  .final-price {
+
+    font-size: 20px;
+
+    font-weight: 800;
+
+    color: var(--gold);
+
+  }
+
+  .original-price {
+
+    margin-left: 8px;
+
+    color: #888;
+
+    text-decoration: line-through;
+
+    font-size: 15px;
+
+  }
+
+  .discount-badge {
+
+    display: inline-block;
+
+    margin-left: 10px;
+
+    background: linear-gradient(135deg,
+        #EAB308,
+        #FACC15);
+
+    color: #111;
+
+    border-radius: 50px;
+
+    padding: 6px 14px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+  }
+
+  /*=========================================
+  CARD ENTRY ANIMATION
+  ==========================================*/
+
+  .menu-grid-card {
+
+    animation: fadeUp .6s ease both;
+
+  }
+
+  @keyframes fadeUp {
+
+    from {
+
+      opacity: 0;
+
+      transform: translateY(30px);
+
+    }
+
+    to {
+
+      opacity: 1;
+
+      transform: none;
+
+    }
+
+  }
+
+  /*=========================================
+  HOVER EFFECT
+  ==========================================*/
+
+  .menu-grid-card:hover .menu-grid-header {
+
+    background: linear-gradient(135deg, #a01133, #ff4b72);
+
+  }
+
+  /*=========================================
+  RESPONSIVE
+  ==========================================*/
+
+  @media(max-width:992px) {
+
+    .menu-content {
+
+      max-height: 350px;
+
+    }
+
+  }
+
+  @media(max-width:768px) {
+
+    .menu-grid-header {
+
+      font-size: 16px;
+
+      padding: 15px;
+
+    }
+
+    .final-price {
+
+      font-size: 24px;
+
+    }
+
+    .notice-text {
+
+      font-size: 14px;
+
+      animation-duration: 15s;
+
+    }
+
+  }
+
+  @media(max-width:576px) {
+
+    .container {
+
+      padding-left: 12px;
+
+      padding-right: 12px;
+
+    }
+
+    .menu-grid-card {
+
+      border-radius: 18px;
+
+    }
+
+    .menu-content {
+
+      max-height: 280px;
+
+    }
+
+    .final-price {
+
+      font-size: 22px;
+
+    }
+
+    .menu-grid-list li {
+
+      font-size: 13px;
+
+    }
+
+    .menu-grid-title {
+
+      font-size: 13px;
+
+    }
+
+    .share-btn {
+
+      width: 34px;
+
+      height: 34px;
+
+    }
+
   }
 </style>
 </head>
 
 <body>
-  <?= require 'navbar.php'; ?>
+  <?php require 'navbar.php'; ?>
   <?php require 'quick_connect.php'; ?>
-  <div class="container my-2">
+  <section class="menu-hero">
+    <div class="container text-center">
+      <h1>🍽 Premium Catering Menu Collection</h1>
+      <p>Select a menu package for your special occasion.</p>
+    </div>
+  </section>
+  <div class="container my-2 mb-4">
     <div class="notice-bar">
       <div class="notice-text">
         🍽️ All menus include breakfast and lunch for 30 guests. For additional guests beyond 30, a charge of ₹225 per head will apply. The minimum requirement for any event is 250 guests.
@@ -242,7 +581,7 @@ $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
       <?php foreach ($menus as $menu): ?>
         <div class="col-12 col-sm-6 col-md-4 col-xl-3">
 
-          <div class="menu-grid-card shadow-sm">
+          <div class="menu-grid-card shadow-sm rounded">
 
             <!-- Header -->
             <div class="menu-grid-header d-flex justify-content-between align-items-center">
@@ -332,6 +671,8 @@ $menus = $menuResponse['status'] ? $menuResponse['data'] : [];
       <i class="fas fa-comments"></i>
     </div>
   </div>
+  <!-- Footer -->
+  <?php require 'footer.php'; ?>
   <script>
     const BASE_URL = "<?= BASE_URL ?>";
   </script>

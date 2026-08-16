@@ -242,7 +242,7 @@ $packages = ($resultMehendi['status'] && !empty($resultMehendi['data']))
 
 <body>
 
-    <?= require 'navbar.php'; ?>
+    <?php require 'navbar.php'; ?>
 
     <!-- ===== HERO ===== -->
     <section class="hero-section">

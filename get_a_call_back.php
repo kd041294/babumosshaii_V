@@ -59,35 +59,168 @@
     </div>
 </section>
 <style>
-    #contactForm .form-control,
-    #contactForm .form-select {
-        border-radius: 10px;
-        border: 2px solid #B8183E22;
-        box-shadow: 0 2px 8px #18181811;
-        transition: border-color 0.2s, box-shadow 0.2s;
+    /* ===========================
+   Contact Section
+=========================== */
+
+#contact {
+    background: linear-gradient(135deg, #fffdf2 0%, #fafad2 100%);
+    border-radius: 25px;
+    padding: 70px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+#contact::before {
+    content: "";
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    background: rgba(184, 24, 62, 0.05);
+    border-radius: 50%;
+    top: -80px;
+    left: -80px;
+}
+
+#contact::after {
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    background: rgba(255, 193, 7, 0.08);
+    border-radius: 50%;
+    bottom: -90px;
+    right: -90px;
+}
+
+/* ===========================
+   Title
+=========================== */
+
+.section-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* ===========================
+   Form Card
+=========================== */
+
+#contactForm {
+    background: #fff;
+    border-radius: 20px;
+    padding: 35px;
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.08),
+        0 2px 10px rgba(184,24,62,.08);
+    transition: .35s ease;
+}
+
+#contactForm:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.12),
+        0 8px 18px rgba(184,24,62,.12);
+}
+
+/* ===========================
+   Labels
+=========================== */
+
+#contactForm label {
+    color: #222;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* ===========================
+   Inputs
+=========================== */
+
+#contactForm .form-control,
+#contactForm .form-select {
+    border-radius: 12px;
+    border: 2px solid #ececec;
+    padding: 12px 16px;
+    font-size: 15px;
+    transition: .3s ease;
+    background: #fff;
+}
+
+#contactForm .form-control::placeholder {
+    color: #999;
+}
+
+#contactForm textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Focus */
+
+#contactForm .form-control:focus,
+#contactForm .form-select:focus {
+    border-color: #B8183E;
+    box-shadow: 0 0 0 4px rgba(184,24,62,.12);
+    transform: translateY(-2px);
+}
+
+/* ===========================
+   Button
+=========================== */
+
+#contactForm .btn-primary {
+    background: linear-gradient(135deg,#B8183E,#d62154);
+    border: none;
+    border-radius: 50px;
+    padding: 14px 42px;
+    font-size: 17px;
+    font-weight: 600;
+    transition: .35s ease;
+}
+
+#contactForm .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(184,24,62,.35);
+    background: linear-gradient(135deg,#181818,#444);
+}
+
+#contactForm .btn-primary:active {
+    transform: scale(.98);
+}
+
+/* ===========================
+   Icons
+=========================== */
+
+#contactForm label i {
+    font-size: 1rem;
+    vertical-align: middle;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media (max-width: 768px) {
+
+    #contact {
+        padding: 45px 15px;
     }
 
-    #contactForm .form-control:focus,
-    #contactForm .form-select:focus {
-        border-color: #B8183E;
-        box-shadow: 0 0 0 0.2rem #B8183E22;
+    #contactForm {
+        padding: 25px;
     }
 
-    #contactForm label {
-        color: #181818;
-        font-size: 1.05rem;
+    .section-title {
+        font-size: 1.8rem;
     }
+
     #contactForm .btn-primary {
-        background: #B8183E;
-        border: none;
-        border-radius: 20px;
-        font-size: 1.1rem;
-        transition: background 0.2s, box-shadow 0.2s;
+        width: 100%;
     }
-
-    #contactForm .btn-primary:hover {
-        background: #181818;
-        color: #FAFAD2;
-        box-shadow: 0 4px 16px #B8183E55;
-    }
+}
 </style>
+<!-- Enhanced Contact Section Replaced -->
+<!-- See contact-section.css for enhanced styles -->
