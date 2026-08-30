@@ -2,7 +2,7 @@
 require 'template_header.php';
 
 
-$profileId = decryptData($_GET['id']) ?? null;
+$profileId = isset($_GET['id']) ? decryptData($_GET['id']) : null;
 $result = getMehendiPackageDetailsById($profileId, 1, 1);
 $pkg = $result['data'] ?? null;
 
@@ -495,8 +495,9 @@ $service_type = 'MEHENDI';
         }
     }
 </style>
-
-<?= require 'navbar.php'; ?>
+</head>
+<body>
+<?php require 'navbar.php'; ?>
 
 <div class="container py-5">
 
@@ -969,7 +970,7 @@ $service_type = 'MEHENDI';
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="assets/js/common.js"></script>
+<script src="assets/js/common.js?v=1.4.0"></script>
 <script src="assets/js/artist_profile.js"></script>
 </body>
 

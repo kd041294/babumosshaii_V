@@ -1,4 +1,10 @@
 <?php
+header_remove('X-Powered-By');
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: SAMEORIGIN');
+header('Referrer-Policy: strict-origin-when-cross-origin');
+header('Permissions-Policy: camera=(), microphone=(), geolocation=()');
+header('Cross-Origin-Opener-Policy: same-origin');
 require_once __DIR__ . '/api/common/config.php';
 require_once __DIR__ . '/api/common/constant_links.php';
 require_once __DIR__ . '/api/common/common_function.php';
@@ -8,6 +14,8 @@ if ($fileName == 'index') {
 }
 ?>
 <!DOCTYPE html>
+<html lang="en">
+<head>
 <meta charset="utf-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +33,7 @@ if ($fileName == 'index') {
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-<link href="assets/css/common.css" rel="stylesheet">
+<link href="assets/css/common.css?v=1.4.0" rel="stylesheet">
 <link href="assets/css/about-section.css" rel="stylesheet">
 <link href="assets/css/gallery-section.css" rel="stylesheet">
 <script type="application/ld+json">
@@ -36,12 +44,13 @@ if ($fileName == 'index') {
     "image": "https://www.babumosshaii.in/assets/images/logo.png",
     "@id": "https://www.babumosshaii.in/",
     "url": "https://www.babumosshaii.in/",
-    "telephone": "+91-8910414656",
+    "telephone": "+91-6290184366",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "104/A Hazra Road",
-      "addressLocality": "Kolkata",
-      "postalCode": "700026",
+      "streetAddress": "Wireless Para, Near Sukanta Sporting Club",
+      "addressLocality": "Konnagar",
+      "addressRegion": "West Bengal",
+      "postalCode": "712246",
       "addressCountry": "IN"
     },
     "openingHoursSpecification": [{
@@ -50,7 +59,7 @@ if ($fileName == 'index') {
         "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
       ],
       "opens": "09:00",
-      "closes": "21:00"
+      "closes": "22:00"
     }],
     "sameAs": [
       "https://www.facebook.com/BabuMosshaii.Official",
@@ -70,4 +79,3 @@ if ($fileName == 'index') {
   gtag('js', new Date());
   gtag('config', 'G-L4DKC20V38');
 </script>
-</head>

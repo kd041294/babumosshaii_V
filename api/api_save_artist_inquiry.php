@@ -1,5 +1,5 @@
 <?php
-header('Content-Type: application/json');
+require_once __DIR__ . '/common/api_security.php';
 
 error_reporting(0);
 ini_set('display_errors', 0);
@@ -7,20 +7,22 @@ require_once __DIR__ . '/common/config.php';
 require_once __DIR__ . '/db/db_connection.php';
 require_once __DIR__ . '/db/db_queries.php';
 
+apiBootstrap('artist-inquiry', 5, 60);
+
 try {
 
     // ✅ Get POST values
     $package_id        = $_POST['package_id'] ?? null;
     $package_code      = $_POST['package_code'] ?? null;
     $service_type      = $_POST['service_type'] ?? null;
-    $customer_name     = $_POST['customer_name'] ?? null;
-    $customer_phone    = $_POST['customer_phone'] ?? null;
-    $customer_email    = $_POST['customer_email'] ?? null;
-    $event_date        = $_POST['event_date'] ?? null;
-    $event_time        = $_POST['event_time'] ?? null;
-    $event_location    = $_POST['event_location'] ?? null;
-    $message           = $_POST['message'] ?? null;
-    $number_of_people  = $_POST['no_of_heads'] ?? null;
+    $customer_name     = apiText($_POST['customer_name'] ?? '', 100);
+    $customer_phone    = apiText($_POST['customer_phone'] ?? '', 15);
+    $customer_email    = apiText($_POST['customer_email'] ?? '', 254);
+    $event_date        = apiText($_POST['event_date'] ?? '', 10);
+    $event_time        = apiText($_POST['event_time'] ?? '', 8);
+    $event_location    = apiText($_POST['event_location'] ?? '', 255);
+    $message           = apiText($_POST['message'] ?? '', 2000);
+    $number_of_people  = filter_var($_POST['no_of_heads'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1, 'max_range' => 100000]]);
     $artist_id         = $_POST['artist_id'] ?? null;
     $artist_uniq_id    = $_POST['artist_uniq_id'] ?? null;
 
@@ -39,6 +41,10 @@ try {
             "message" => "Invalid phone number"
         ]);
         exit;
+    }
+
+    if (!preg_match('/^[\p{L}\p{M} .\'-]{2,100}$/u', $customer_name)) {
+        apiRespond(['status' => 'error', 'message' => 'Invalid customer name'], 422);
     }
 
     if ($customer_email && !filter_var($customer_email, FILTER_VALIDATE_EMAIL)) {
@@ -125,18 +131,16 @@ try {
     ]);
 
     // ✅ SUCCESS RESPONSE
-    echo json_encode([
+    apiRespond([
         "status" => true,
         "message" => "Inquiry saved successfully"
-    ]);
-    exit; // ✅ IMPORTANT
+    ], 201);
 
 
 } catch (PDOException $e) {
-
-    echo json_encode([
+    error_log('Artist inquiry database error: ' . $e->getMessage());
+    apiRespond([
         "status" => false,
-        "message" => $e->getMessage()
-    ]);
-    exit;
+        "message" => "Unable to save the inquiry right now"
+    ], 500);
 }
