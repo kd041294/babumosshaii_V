@@ -21,6 +21,7 @@ if ($enc_id) {
     }
 }
 ?>
+<title><?= !empty($banquet['_hall_name']) ? htmlspecialchars($banquet['_hall_name']) . ' | BabuMosshaii' : 'Banquet Hall Details | BabuMosshaii' ?></title>
 <style>
     .banquet-header {
         background: linear-gradient(135deg, #24ba38ff, #c9dfc0ff);
@@ -509,7 +510,7 @@ if ($enc_id) {
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_45Rq9STmkXf2jatXaVg-XUcd2ykD4hs"></script>
-    <script src="assets/js/common.js"></script>
+    <script src="assets/js/common.js?v=1.4.0"></script>
     <script src="assets/js/banquets.js"></script>
     <script>
         function initMap() {

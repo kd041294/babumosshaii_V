@@ -257,11 +257,17 @@ $(document).ready(function() {
 });
 
 function showLoader() {
-    document.getElementById("pageLoader").classList.remove("loader-hidden");
+    const loader = document.getElementById("pageLoader");
+    if (loader) {
+        loader.classList.remove("loader-hidden");
+    }
 }
 
 function hideLoader() {
-    document.getElementById("pageLoader").classList.add("loader-hidden");
+    const loader = document.getElementById("pageLoader");
+    if (loader) {
+        loader.classList.add("loader-hidden");
+    }
 }
 
 /* Auto hide after page load */

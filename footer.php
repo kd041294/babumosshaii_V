@@ -170,14 +170,11 @@
                     <i class="bi bi-share-fill me-2"></i>Follow Us
                 </div>
                 <div class="footer-social mb-4 d-flex justify-content-center">
-                    <a href="https://facebook.com/" target="_blank" aria-label="Facebook" class="footer-social-link">
+                    <a href="https://www.facebook.com/BabuMosshaii.Official" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="footer-social-link">
                         <i class="bi bi-facebook" style="font-size:1.3rem;"></i>
                     </a>
-                    <a href="https://instagram.com/" target="_blank" aria-label="Instagram" class="footer-social-link">
+                    <a href="https://instagram.com/babumosshaii20.official" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="footer-social-link">
                         <i class="bi bi-instagram" style="font-size:1.3rem;"></i>
-                    </a>
-                    <a href="https://youtube.com/" target="_blank" aria-label="YouTube" class="footer-social-link">
-                        <i class="bi bi-youtube" style="font-size:1.3rem;"></i>
                     </a>
                     <a href="mailto:info@babumosshaii.in" aria-label="Email" class="footer-social-link">
                         <i class="bi bi-envelope-fill" style="font-size:1.3rem;"></i>
@@ -222,7 +219,6 @@
         Crafted with <span style="font-size:1.2em; color: red;">&#10084;</span> in Kolkata
     </div>
 </footer>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <style>
     footer a:hover {
         color: #181818 !important;

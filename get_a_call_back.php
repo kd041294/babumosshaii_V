@@ -4,7 +4,7 @@
             <i class="bi bi-telephone-inbound-fill me-2 text-warning"></i>Get a Quote
         </h2>
         <p class="text-center mb-4" style="color:#181818;">Tell us about your event and we’ll get back to you with a custom menu and quote!</p>
-        <form id="contactForm" class="col-lg-8 mx-auto p-4 rounded-4 shadow-sm" style="background:#fafad2;" autocomplete="off">
+        <form id="contactForm" class="col-lg-8 mx-auto p-4 rounded-4 shadow-sm" method="post" action="api/api_save_call_back.php" autocomplete="off">
             <div class="row g-3">
                 <div class="col-md-6">
                     <label class="form-label fw-semibold" for="fullName"><i class="bi bi-person-fill me-1 text-primary"></i>Full Name</label>

@@ -1,5 +1,5 @@
 <?php
-header('Content-Type: application/json');
+require_once __DIR__ . '/common/api_security.php';
 
 error_reporting(0);
 ini_set('display_errors', 0);
@@ -8,6 +8,8 @@ require_once __DIR__ . '/common/config.php';
 require_once __DIR__ . '/db/db_connection.php';
 require_once __DIR__ . '/db/db_queries.php';
 
+apiBootstrap('artist-review', 3, 300);
+
 try {
 
     // ✅ Get POST values
@@ -15,12 +17,12 @@ try {
     $artist_id       = $_POST['artist_id'] ?? null;
     $artist_uniq_id  = $_POST['artist_uniq_id'] ?? null;
 
-    $name            = $_POST['name'] ?? null;
-    $email           = $_POST['email'] ?? null;
-    $event_date      = $_POST['event_date'] ?? null;
-    $rating          = $_POST['rating'] ?? null;
-    $message         = $_POST['message'] ?? null;
-    $service_type     = $_POST['service_type'] ?? null;
+    $name            = apiText($_POST['name'] ?? '', 100);
+    $email           = apiText($_POST['email'] ?? '', 254);
+    $event_date      = apiText($_POST['event_date'] ?? '', 10);
+    $rating          = filter_var($_POST['rating'] ?? null, FILTER_VALIDATE_INT);
+    $message         = apiText($_POST['message'] ?? '', 2000);
+    $service_type    = apiText($_POST['service_type'] ?? '', 50);
 
     // ✅ Validation
     if (!$name || !$email || !$event_date || !$rating || !$message) {
@@ -37,6 +39,10 @@ try {
             "message" => "Invalid email"
         ]);
         exit;
+    }
+
+    if (!preg_match('/^[\p{L}\p{M} .\'-]{2,100}$/u', $name) || !apiValidDate($event_date, true)) {
+        apiRespond(['status' => 'error', 'message' => 'Please check the name and event date'], 422);
     }
 
     if ($rating < 1 || $rating > 5) {
@@ -94,17 +100,15 @@ try {
     ]);
 
     // ✅ SUCCESS
-    echo json_encode([
+    apiRespond([
         "status" => true,
         "message" => "Review created successfully"
-    ]);
-    exit;
+    ], 201);
 
 } catch (PDOException $e) {
-
-    echo json_encode([
+    error_log('Artist review database error: ' . $e->getMessage());
+    apiRespond([
         "status" => false,
-        "message" => $e->getMessage()
-    ]);
-    exit;
+        "message" => "Unable to save the review right now"
+    ], 500);
 }
